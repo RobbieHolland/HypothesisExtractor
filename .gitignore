@@ -1,0 +1,7 @@
+out/
+data/mock/ct/
+__pycache__/
+*.pyc
+.pytest_cache/
+outputs/
+.hydra/

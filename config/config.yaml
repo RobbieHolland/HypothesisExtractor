@@ -1,0 +1,19 @@
+paths:
+  metadata_csv: data/mock/metadata.csv
+  diagnoses_csv: data/mock/diagnoses.csv
+  icd_phecode_map: data/mappings/Phecode_map12_filtered.csv
+  phecode_task_map: data/mappings/refined_mapped_phecodes.csv
+  out_dir: out/
+
+huggingface_token: null   # set your HuggingFace token here
+
+batch_size: 4
+
+trainer:
+  accelerator: auto
+  devices: 1
+
+# Prevent Hydra from changing the working directory
+hydra:
+  run:
+    dir: .

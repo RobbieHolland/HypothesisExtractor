@@ -1,0 +1,6 @@
+sample_id,patient_id,date,ct_path,report_path
+S001,P001,2020-01-15,data/mock/ct/S001.nii.gz,data/mock/reports/S001.txt
+S002,P001,2021-03-20,data/mock/ct/S002.nii.gz,data/mock/reports/S002.txt
+S003,P002,2019-06-10,data/mock/ct/S003.nii.gz,data/mock/reports/S003.txt
+S004,P003,2020-11-05,data/mock/ct/S004.nii.gz,data/mock/reports/S004.txt
+S005,P004,2022-08-12,data/mock/ct/S005.nii.gz,data/mock/reports/S005.txt
