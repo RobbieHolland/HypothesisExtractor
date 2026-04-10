@@ -7,7 +7,7 @@ paths:
 
 huggingface_token: null   # set your HuggingFace token here
 
-batch_size: 4
+batch_size: 8
 
 trainer:
   accelerator: auto

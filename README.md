@@ -5,7 +5,7 @@ Extracts foundation model embeddings and longitudinal outcome labels from CT ima
 ## Requirements
 
 - Python 3.10+
-- GPU with ≥40 GB VRAM
+- If running batch size ≥24, a GPU with ≥40 GB VRAM is needed. Try reduced batch size otherwise.
 - [Merlin](https://github.com/StanfordMIMI/Merlin): `pip install merlin-vlm`
 - A HuggingFace token with access to `Qwen/Qwen3-Embedding-8B`
 
