@@ -6,3 +6,4 @@ __pycache__/
 outputs/
 .hydra/
 .pytest_basetemp/
+scripts/build_all_phecodes_mapping.py
