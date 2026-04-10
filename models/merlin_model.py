@@ -45,4 +45,6 @@ class MerlinEmbedder(nn.Module):
 
     def forward(self, images):
         # images: [B, 1, 224, 224, 160]
-        return self.model(images)
+        # Merlin outputs [B, 1, 2048], squeeze to [B, 2048]
+        output = self.model(images)
+        return output.squeeze(1)

@@ -73,7 +73,7 @@ def test_embedding_computer_outputs(tmp_path):
          patch("compute_embeddings.Qwen3Embedder") as MockQwen3:
 
         MockMerlin.return_value = MagicMock(
-            side_effect=lambda x: torch.randn(x.shape[0], 512),
+            side_effect=lambda x: torch.randn(x.shape[0], 2048),
             eval=MagicMock(),
         )
         MockQwen3.return_value = MagicMock(
@@ -85,7 +85,7 @@ def test_embedding_computer_outputs(tmp_path):
         EmbeddingComputer(cfg).run()
 
     ct = torch.load(os.path.join(cfg.paths.out_dir, "ct_embeddings.pt"))
-    assert ct["embeddings"].shape == (3, 512)
+    assert ct["embeddings"].shape == (3, 2048)
     assert ct["sample_ids"] == ["S001", "S002", "S003"]
 
     rep = torch.load(os.path.join(cfg.paths.out_dir, "report_embeddings.pt"))
