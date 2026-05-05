@@ -18,7 +18,10 @@ class EmbeddingExtractor(LightningModule):
         inputs, sample_ids = batch
         with torch.no_grad():
             embeddings = self.model(inputs)
-        return {"embeddings": embeddings.cpu(), "sample_ids": list(sample_ids)}
+        embeddings = embeddings.cpu()
+        if hasattr(embeddings, "as_tensor"):
+            embeddings = embeddings.as_tensor()
+        return {"embeddings": embeddings, "sample_ids": list(sample_ids)}
 
 
 class CollectCallback(Callback):
