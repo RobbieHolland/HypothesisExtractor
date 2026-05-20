@@ -1,7 +1,13 @@
+import re
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import Dataset
+
+
+def _extract_findings(text):
+    match = re.search(r'findings\s*:?\s*(.*?)(?=\bimpression\b|$)', text, re.IGNORECASE | re.DOTALL)
+    return match.group(1).strip() if match else text.strip()
 
 
 def last_token_pool(last_hidden_states, attention_mask):
@@ -16,7 +22,17 @@ def last_token_pool(last_hidden_states, attention_mask):
 class TextDataset(Dataset):
     # Reads radiology report text files from paths.
     def __init__(self, paths, sample_ids):
-        self.texts = [open(p).read() for p in paths]
+        self.texts = []
+        n_mapped = 0
+        for p in paths:
+            raw = open(p).read()
+            findings = _extract_findings(raw)
+            if findings == raw.strip():
+                print(f"Warning: no FINDINGS section found in {p}, using full text")
+            else:
+                n_mapped += 1
+            self.texts.append(findings)
+        print(f"FINDINGS extraction: {n_mapped}/{len(paths)} reports mapped ({100 * n_mapped / len(paths):.1f}%)")
         self.sample_ids = sample_ids
 
     def __len__(self):
