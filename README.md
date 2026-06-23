@@ -72,11 +72,11 @@ Labs are filtered to the 6-month window prior to each scan date and quarterly-do
 python run.py
 ```
 
-By default this runs `embeddings` and `outcomes`. To run additional steps, override `steps` on the command line:
+This runs the full pipeline by default. To run only specific steps:
 
 ```bash
-python run.py steps=[embeddings,outcomes,sae,autorate]   # full pipeline
-python run.py steps=[sae,autorate]                       # SAE + AutoRate only (requires embeddings already computed)
+python run.py steps=[embeddings,outcomes]   # embeddings and outcomes only
+python run.py steps=[sae,autorate]          # SAE + AutoRate only (requires embeddings already computed)
 ```
 
 **Steps:**
