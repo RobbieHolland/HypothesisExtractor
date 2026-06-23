@@ -82,10 +82,10 @@ python run.py steps=[sae,autorate]                       # SAE + AutoRate only (
 **Steps:**
 - `embeddings` — extract CT, report, and lab embeddings
 - `outcomes` — compute survival outcome labels from ICD codes
-- `sae` — apply pretrained Sparse Autoencoders to embeddings → `out/concept_activations_{modality}.csv` (SAE weights auto-downloaded from HuggingFace on first run)
-- `autorate` — score existing concept interpretations on your data via Vertex AI → `out/autointerp_results.csv`
+- `sae` — apply pretrained Sparse Autoencoders to embeddings, producing sparse concept activations per sample. SAE weights are auto-downloaded from HuggingFace on first run.
+- `autorate` — for each of 342 pre-generated concept interpretations, sample high- and low-activating patients, ask Vertex AI (`gemini-2.5-pro`) to discriminate between them using the interpretation text, and record the accuracy. This validates how well the interpretations transfer to your dataset.
 
-For `sae` and `autorate`, set `paths.vertex_project` in `config/config.yaml` to your GCP project ID.
+For `autorate`, set `paths.vertex_project` in `config/config.yaml` to your GCP project ID.
 
 ## Outputs
 
@@ -95,6 +95,9 @@ All outputs are written to `out/` (configurable via `paths.out_dir`):
 - **`report_embeddings.pt`** — `{'embeddings': Tensor[N, 4096], 'sample_ids': [...]}`
 - **`lab_embeddings.pt`** — `{'embeddings': Tensor[N, 768], 'sample_ids': [...]}` *(N may be less than total samples if some have no labs in window)*
 - **`outcomes.pkl`** — DataFrame with one row per sample. For each task: `{task}_event` (0/1) and `{task}_time` (days from scan date to first event, or to last recorded ICD date if no event). Times include Gaussian anonymization jitter (σ=3 days).
+- **`concept_activations_{modality}.csv`** — sparse SAE activations (`sample_id` + `Concept_0`…`Concept_8191`), one file per modality present. *(requires `sae` step)*
+- **`autointerp_results.csv`** — one row per concept with `inputs`, `feature_name`, `top_k`, `matryoshka`, `extracted_interpretation`, and `mayo_interpretation_discrimination_accuracy`. *(requires `autorate` step)*
+- **`autointerp_top_samples.csv`** — top-3 highest-activating samples per concept with their report text or formatted labs. *(requires `autorate` step)*
 
 ICD-to-task mappings are in `data/mappings/`.
 
