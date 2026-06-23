@@ -123,6 +123,14 @@ class LabsDataset(Dataset):
         loinc_to_lab_id = loinc_map.dropna(subset=["loinc_code", "lab_id"]).set_index("loinc_code")["lab_id"].to_dict()
 
         labs = labs_df.copy()
+
+        if "date" not in labs.columns and "start" in labs.columns:
+            labs = labs.rename(columns={"start": "date"})
+        if "loinc_code" not in labs.columns and "code" in labs.columns:
+            labs = labs.rename(columns={"code": "loinc_code"})
+        if labs["loinc_code"].str.startswith("LOINC/").any():
+            labs["loinc_code"] = labs["loinc_code"].str.replace("LOINC/", "", regex=False)
+
         labs["date"] = pd.to_datetime(labs["date"])
         labs = labs.dropna(subset=["value"])
 
