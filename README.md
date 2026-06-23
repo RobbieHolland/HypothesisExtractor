@@ -62,7 +62,7 @@ One row per lab result:
 | `loinc_code` | LOINC code identifying the lab test |
 | `value` | Numeric result value |
 
-Set `paths.labs_csv` in `config/config.yaml` to enable lab embedding extraction. The LOINC mapping and pretrained encoder are bundled in `data/mappings/` and require no configuration.
+Set `paths.labs_csv` in `config/config.yaml` to enable lab embedding extraction. The LOINC mapping and pretrained encoder are bundled in `data/mappings/` and require no configuration. The column names `start` and `code` are accepted as aliases for `date` and `loinc_code`, and the `LOINC/` prefix on codes is stripped automatically.
 
 Labs are filtered to the 6-month window prior to each scan date and quarterly-downsampled before embedding. Samples with no labs in that window are omitted from `lab_embeddings.pt`.
 
