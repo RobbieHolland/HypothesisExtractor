@@ -160,5 +160,13 @@ def test_autorate_end_to_end(tmp_path):
     assert len(result) == 1
     assert result.iloc[0]["inputs"] == "findings"
     assert result.iloc[0]["feature_name"] == "Concept_0"
+    assert "outcome" not in result.columns
+    assert "test_interpretation_discrimination_accuracy" not in result.columns
     acc = result.iloc[0]["mayo_interpretation_discrimination_accuracy"]
     assert 0.0 <= acc <= 1.0
+
+    samples = pd.read_csv(out_dir / "autointerp_top_samples.csv")
+    assert set(samples.columns) >= {"inputs", "feature_name", "rank", "sample_id", "activation", "text"}
+    assert list(samples["rank"]) == sorted(samples["rank"].tolist())
+    assert len(samples) <= 3
+    assert (samples["activation"] > 0).all()

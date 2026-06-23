@@ -6,7 +6,6 @@ Outputs one CSV per modality: out/concept_activations_{modality}.csv
 import os
 import torch
 import pandas as pd
-import hydra
 from models.sae_model import apply_sae
 
 MODALITY_EMBEDDING_FILE = {
@@ -16,8 +15,7 @@ MODALITY_EMBEDDING_FILE = {
 }
 
 
-@hydra.main(config_path="config", config_name="config", version_base=None)
-def main(config):
+def run_infer_sae(config):
     out_dir = config.paths.out_dir
     cache_dir = config.paths.get("sae_cache_dir", "data/mappings")
 
@@ -43,4 +41,11 @@ def main(config):
 
 
 if __name__ == "__main__":
+    import hydra
+    from omegaconf import DictConfig
+
+    @hydra.main(config_path="config", config_name="config", version_base=None)
+    def main(cfg: DictConfig):
+        run_infer_sae(cfg)
+
     main()

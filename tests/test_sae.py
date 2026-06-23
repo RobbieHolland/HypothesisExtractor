@@ -67,10 +67,9 @@ def test_infer_sae_produces_csv(tmp_path):
     dummy_weights = _make_dummy_weights(emb_dim, n_concepts)
 
     with patch("models.sae_model._load_sae_weights", return_value=dummy_weights), \
-         patch("models.sae_model.TOP_K", 4), \
-         patch("infer_sae.TOP_K", 4, create=True):
-        import infer_sae
-        infer_sae.main.__wrapped__(cfg)
+         patch("models.sae_model.TOP_K", 4):
+        from infer_sae import run_infer_sae
+        run_infer_sae(cfg)
 
     out_csv = tmp_path / "concept_activations_findings.csv"
     assert out_csv.exists()

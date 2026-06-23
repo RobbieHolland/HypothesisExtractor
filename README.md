@@ -72,6 +72,21 @@ Labs are filtered to the 6-month window prior to each scan date and quarterly-do
 python run.py
 ```
 
+By default this runs `embeddings` and `outcomes`. To run additional steps, override `steps` on the command line:
+
+```bash
+python run.py steps=[embeddings,outcomes,sae,autorate]   # full pipeline
+python run.py steps=[sae,autorate]                       # SAE + AutoRate only (requires embeddings already computed)
+```
+
+**Steps:**
+- `embeddings` — extract CT, report, and lab embeddings
+- `outcomes` — compute survival outcome labels from ICD codes
+- `sae` — apply pretrained Sparse Autoencoders to embeddings → `out/concept_activations_{modality}.csv` (SAE weights auto-downloaded from HuggingFace on first run)
+- `autorate` — score existing concept interpretations on your data via Vertex AI → `out/autointerp_results.csv`
+
+For `sae` and `autorate`, set `paths.vertex_project` in `config/config.yaml` to your GCP project ID.
+
 ## Outputs
 
 All outputs are written to `out/` (configurable via `paths.out_dir`):

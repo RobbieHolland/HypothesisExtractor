@@ -15,7 +15,6 @@ import re
 import random
 import numpy as np
 import pandas as pd
-import hydra
 from utilities.vertex_ai import VertexAIClient
 
 INTERP_CSV = "data/autointerp_interpretations.csv"
@@ -172,9 +171,12 @@ def run_autorate(config):
         labs_metadata = pd.read_pickle(config.paths.labs_metadata)
 
     out_path = os.path.join(out_dir, "autointerp_results.csv")
+    samples_path = os.path.join(out_dir, "autointerp_top_samples.csv")
     existing = pd.read_csv(out_path) if os.path.exists(out_path) else pd.DataFrame()
+    existing_samples = pd.read_csv(samples_path) if os.path.exists(samples_path) else pd.DataFrame()
 
     results = []
+    top_sample_rows = []
     for _, interp_row in interpretations.iterrows():
         modality = interp_row["inputs"]
         feature_name = interp_row["feature_name"]
@@ -187,7 +189,7 @@ def run_autorate(config):
             print(f"Skipping {modality}/{feature_name}: no activations at {acts_path}")
             continue
 
-        if not existing.empty and ((existing["inputs"] == modality) & (existing["feature_name"] == feature_name)).any():
+        if not existing.empty and ((existing["inputs"] == modality) & (existing["feature_name"] == feature_name) & (existing["top_k"] == interp_row.get("top_k")) & (existing["matryoshka"] == interp_row.get("matryoshka"))).any():
             print(f"Skipping {modality}/{feature_name}: already rated")
             continue
 
@@ -240,30 +242,45 @@ def run_autorate(config):
 
         print(f"  Discrimination accuracy: {acc:.2%}" if not np.isnan(acc) else "  Accuracy: N/A")
 
+        # Top-3 activating samples
+        top3_ids = active.nlargest(3).index.tolist()
+        for rank, sid in enumerate(top3_ids, start=1):
+            top_sample_rows.append({
+                "inputs": modality,
+                "feature_name": feature_name,
+                "rank": rank,
+                "sample_id": sid,
+                "activation": float(active[sid]),
+                "text": _get_patient_text(sid, field, metadata, labs_df, loinc_map, labs_metadata),
+            })
+
         results.append({
             "inputs": modality,
             "feature_name": feature_name,
             "top_k": interp_row.get("top_k"),
             "matryoshka": interp_row.get("matryoshka"),
-            "outcome": interp_row.get("outcome"),
             "extracted_interpretation": interpretation,
             "mayo_n_tested": len(combined),
             "mayo_interpretation_discrimination_accuracy": acc,
-            "test_interpretation_discrimination_accuracy": interp_row.get("test_interpretation_discrimination_accuracy"),
-            "tri_valley_interpretation_discrimination_accuracy": interp_row.get("tri_valley_interpretation_discrimination_accuracy"),
         })
 
         all_results = pd.concat([existing, pd.DataFrame(results)], ignore_index=True)
-        all_results.drop_duplicates(subset=["inputs", "feature_name", "top_k", "matryoshka", "outcome"], keep="last", inplace=True)
+        all_results.drop_duplicates(subset=["inputs", "feature_name", "top_k", "matryoshka"], keep="last", inplace=True)
         all_results.to_csv(out_path, index=False)
+
+        all_samples = pd.concat([existing_samples, pd.DataFrame(top_sample_rows)], ignore_index=True)
+        all_samples.drop_duplicates(subset=["inputs", "feature_name", "rank"], keep="last", inplace=True)
+        all_samples.to_csv(samples_path, index=False)
 
     print(f"\nDone. Results saved to {out_path}  ({len(results)} new rows)")
 
 
-@hydra.main(config_path="config", config_name="config", version_base=None)
-def main(config):
-    run_autorate(config)
-
-
 if __name__ == "__main__":
+    import hydra
+    from omegaconf import DictConfig
+
+    @hydra.main(config_path="config", config_name="config", version_base=None)
+    def main(cfg: DictConfig):
+        run_autorate(cfg)
+
     main()
