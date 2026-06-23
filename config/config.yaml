@@ -8,6 +8,10 @@ paths:
   labs_metadata: data/mappings/lab_types_analysis.pkl
   loinc_map: data/mappings/lab_loinc_map.csv
   labs_checkpoint: data/mappings
+  sae_cache_dir: data/sae        # SAE encoder weights auto-downloaded from HuggingFace on first use
+  vertex_project: null           # GCP project ID (e.g. som-nero-phi-sgatidis-ge-ai)
+  vertex_location: us-central1
+  vertex_model: gemini-2.5-pro
 
 huggingface_token: null   # set your HuggingFace token here
 

@@ -7,3 +7,5 @@ outputs/
 .hydra/
 .pytest_basetemp/
 scripts/build_all_phecodes_mapping.py
+data/sample/
+data/sae/

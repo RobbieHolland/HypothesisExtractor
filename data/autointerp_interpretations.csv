@@ -1,0 +1,343 @@
+inputs,feature_name,top_k,matryoshka,outcome,extracted_interpretation,test_interpretation_discrimination_accuracy,tri_valley_interpretation_discrimination_accuracy
+findings,Concept_85,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,Cirrhotic liver morphology and varices.,0.95,0.95
+findings,Concept_90,40,"[128, 512, 2048, 8192]",gout,Findings related to the prostate and seminal vesicles.,0.75,0.75
+findings,Concept_64,40,"[128, 512, 2048, 8192]",osteoporosis,Metastatic disease.,1.0,1.0
+findings,Concept_96,40,"[128, 512, 2048, 8192]",gout,Complex post-surgical changes or the presence of indwelling medical devices.,0.8,0.65
+findings,Concept_101,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,The presence of pleural effusion and ascites.,0.875,0.8
+findings,Concept_21,40,"[128, 512, 2048, 8192]",osteoporosis,Calcification of the coronary arteries or cardiac valves.,0.9,0.7
+findings,Concept_52,40,"[128, 512, 2048, 8192]",gout,Intra-abdominal fluid collections with rim enhancement or internal gas.,0.8,0.95
+findings,Concept_98,40,"[128, 512, 2048, 8192]",pleural_effusion,Peritoneal carcinomatosis.,0.95,0.95
+findings,Concept_115,40,"[128, 512, 2048, 8192]",osteoporosis,Major structural abnormalities of the spine.,0.85,0.9
+findings,Concept_34,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,Anasarca and ascites.,0.9,0.85
+findings,Concept_26,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,The presence of ascites or peritoneal carcinomatosis.,0.8,0.65
+findings,Concept_127,40,"[128, 512, 2048, 8192]",cancer_liver,Postsurgical changes from major abdominal surgery or the presence of significant focal or diffuse liver pathology.,0.65,0.65
+findings,Concept_1765,40,"[128, 512, 2048, 8192]",cancer_liver_primary,Morphological changes of the liver including nodular contour and lobar redistribution (caudate or left lobe hypertrophy).,0.95,0.95
+findings,Concept_95,40,"[128, 512, 2048, 8192]",bowel_obstruction,Postsurgical changes of a colectomy and the presence of an intestinal stoma (ileostomy or colostomy).,0.95,0.95
+findings,Concept_3,40,"[128, 512, 2048, 8192]",cancer_anywhere,Moderate to severe atherosclerotic disease.,0.85,0.8
+findings,Concept_97,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,A fat-containing umbilical hernia.,0.9,0.95
+findings,Concept_42,40,"[128, 512, 2048, 8192]",surgically_absent_gallbladder,"Postsurgical changes of the pancreas, most commonly a Whipple procedure, or severe pancreatitis with complications such as necrosis, peripancreatic fluid collections, or pseudocysts.",0.95,0.85
+findings,Concept_114,40,"[128, 512, 2048, 8192]",dementia,The presence of an implanted electronic medical device.,0.95,0.725
+findings,Concept_40,40,"[128, 512, 2048, 8192]",anasarca,Post-surgical changes consistent with prior abdominal organ resection and/or anastomosis.,0.85,0.8
+findings,Concept_93,40,"[128, 512, 2048, 8192]",cancer_liver_primary,"An adrenal gland nodule, mass, or thickening.",0.9,1.0
+findings,Concept_66,40,"[128, 512, 2048, 8192]",anemia,Postsurgical changes of Roux-en-Y gastric bypass.,0.975,1.0
+findings,Concept_108,40,"[128, 512, 2048, 8192]",cancer_anywhere,Pathology of the spleen or splenic vasculature.,1.0,0.85
+findings,Concept_149,40,"[128, 512, 2048, 8192]",pleural_effusion,"The presence of one or more indwelling tubes, drains, or catheters.",0.85,0.9
+findings,Concept_183,40,"[128, 512, 2048, 8192]",cancer_pancreatic_primary,Evidence of significant focal or structural hepatobiliary disease.,0.85,0.7
+findings,Concept_24,40,"[128, 512, 2048, 8192]",biliary_ductal_dilation,Abdominopelvic venous thrombosis or pulmonary embolism.,0.95,0.95
+findings,Concept_119,40,"[128, 512, 2048, 8192]",cancer_liver_primary,Hip arthroplasty and/or severe degenerative or destructive changes of the hip joint(s).,0.9,0.9
+findings,Concept_71,40,"[128, 512, 2048, 8192]",submucosal_edema,A surgical anastomosis involving the jejunum or a percutaneous tube terminating in the jejunum.,0.85,0.85
+findings,Concept_414,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,The presence of varices.,0.9,1.0
+findings,Concept_73,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,"Pancreatic pathology, specifically cystic neoplasms (including intraductal papillary mucinous neoplasm), solid masses, and pancreatitis.",0.9,0.9
+findings,Concept_456,40,"[128, 512, 2048, 8192]",pleural_effusion,The presence or history of an inferior vena cava (IVC) filter.,1.0,1.0
+findings,Concept_27,40,"[128, 512, 2048, 8192]",ckd,The presence of a stent.,0.9,1.0
+findings,Concept_390,40,"[128, 512, 2048, 8192]",707.1,Osseous metastatic disease or hepatic metastatic disease.,0.9,0.85
+findings,Concept_75,40,"[128, 512, 2048, 8192]",diabetes,The presence of an indwelling medical catheter.,0.95,0.9
+findings,Concept_69,40,"[128, 512, 2048, 8192]",cancer_anywhere,The presence of a hernia.,0.75,0.9
+findings,Concept_204,40,"[128, 512, 2048, 8192]",atherosclerosis,Cardiomegaly.,1.0,0.95
+findings,Concept_13,40,"[128, 512, 2048, 8192]",dementia,Intrahepatic or extrahepatic biliary ductal dilatation.,0.9,0.95
+findings,Concept_125,40,"[128, 512, 2048, 8192]",gout,Significant pathology or an anatomic variant of the major abdominal vasculature.,0.85,0.65
+findings,Concept_468,40,"[128, 512, 2048, 8192]",surgically_absent_gallbladder,A history of solid organ transplant.,0.975,1.0
+findings,Concept_28,40,"[128, 512, 2048, 8192]",diabetes,The presence of colonic diverticulosis or a duodenal diverticulum.,0.85,0.9
+findings,Concept_368,40,"[128, 512, 2048, 8192]",bowel_obstruction,Postsurgical changes of partial or total colectomy.,0.95,0.975
+findings,Concept_423,40,"[128, 512, 2048, 8192]",anasarca,Thrombosis or occlusion of the portal vein or its major tributaries.,0.95,0.85
+findings,Concept_5,40,"[128, 512, 2048, 8192]",surgically_absent_gallbladder,Postsurgical changes of a Whipple procedure and associated pneumobilia.,1.0,1.0
+findings,Concept_139,40,"[128, 512, 2048, 8192]",osteoporosis,Vertebral compression deformity.,0.9,1.0
+findings,Concept_14,40,"[128, 512, 2048, 8192]",,This cohort is characterized by evidence of breast intervention.,0.95,1.0
+findings,Concept_242,40,"[128, 512, 2048, 8192]",pleural_effusion,"Reports describing interval change from a prior imaging study and the presence of fluid collections, abscesses, or indwelling therapeutic devices such as drains or stents.",0.8,0.95
+findings,Concept_500,40,"[128, 512, 2048, 8192]",pleural_effusion,The presence of a percutaneous or surgical drain and an associated fluid collection or abscess.,0.9,0.9
+findings,Concept_8,40,"[128, 512, 2048, 8192]",surgically_absent_gallbladder,Surgical absence of the bladder or uterus.,0.7,0.9
+findings,Concept_38,40,"[128, 512, 2048, 8192]",gout,"The presence of a percutaneous drain or stent, or interval resolution of an intra-abdominal fluid collection or abscess.",0.85,0.75
+findings,Concept_215,40,"[128, 512, 2048, 8192]",pleural_effusion,Peritoneal carcinomatosis.,0.85,0.7
+findings,Concept_62,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,The presence of a large or locally invasive mass.,0.85,0.8
+findings,Concept_121,40,"[128, 512, 2048, 8192]",cancer_lung,Postsurgical changes from major abdominal or pelvic surgery and/or a history of malignancy.,0.65,0.6
+findings,Concept_491,40,"[128, 512, 2048, 8192]",anasarca,Anasarca and third-space fluid collections such as pleural effusions or ascites.,0.85,0.95
+findings,Concept_317,40,"[128, 512, 2048, 8192]",surgically_absent_gallbladder,Nan,0.85,0.5
+findings,Concept_48,40,"[128, 512, 2048, 8192]",splenomegaly,Enlarged or prominent abdominopelvic lymph nodes.,0.9,0.35
+findings,Concept_309,40,"[128, 512, 2048, 8192]",splenomegaly,Evidence of portal hypertension or pulmonary hypertension.,0.95,0.9
+findings,Concept_420,40,"[128, 512, 2048, 8192]",diabetes,Coronary artery calcification or atherosclerosis.,0.925,0.6
+findings,Concept_473,40,"[128, 512, 2048, 8192]",surgically_absent_gallbladder,Pneumobilia.,0.975,1.0
+findings,Concept_333,40,"[128, 512, 2048, 8192]",splenomegaly,"Thrombosis of the portal venous system (portal vein, superior mesenteric vein, or splenic vein).",0.9,0.95
+findings,Concept_409,40,"[128, 512, 2048, 8192]",dementia,Mitral annular calcification or post-surgical changes of the mitral valve.,0.975,0.95
+findings,Concept_136,40,"[128, 512, 2048, 8192]",cancer_pancreatic_primary,A lesion or finding involving the pancreatic tail.,1.0,1.0
+findings,Concept_32,40,"[128, 512, 2048, 8192]",anasarca,"The presence of a fistula, anastomotic leak, or sinus tract, and an associated abscess or inflammatory collection.",0.9,0.9
+findings,Concept_70,40,"[128, 512, 2048, 8192]",gout,Scarring in the lung bases or cortical scarring in the kidneys.,0.8,0.8
+findings,Concept_428,40,"[128, 512, 2048, 8192]",pleural_effusion,The presence of a central venous catheter.,1.0,0.95
+findings,Concept_398,40,"[128, 512, 2048, 8192]",dementia,Pancreatic atrophy or kidney atrophy.,0.7,0.9
+findings,Concept_50,40,"[128, 512, 2048, 8192]",osteoporosis,Pulmonary nodules or extra-pulmonary soft tissue nodules.,0.8,0.7
+findings,Concept_479,40,"[128, 512, 2048, 8192]",,This cohort is characterized by evidence of spinal instrumentation.,0.95,1.0
+findings,Concept_171,40,"[128, 512, 2048, 8192]",splenomegaly,"Porta hepatis lymphadenopathy or mass, and/or portal vein pathology.",0.85,0.55
+findings,Concept_276,40,"[128, 512, 2048, 8192]",,This cohort is characterized by a lesion or finding in the dome of the liver.,0.9,0.95
+findings,Concept_56,40,"[128, 512, 2048, 8192]",renal_failure,A fluid collection or soft tissue abnormality in the presacral space.,1.0,0.95
+findings,Concept_1376,40,"[128, 512, 2048, 8192]",CVD_Cerebrovascular_Disease,Spinal fusion or a congenital anomaly.,0.8,0.95
+findings,Concept_18,40,"[128, 512, 2048, 8192]",600.0,The presence of a non-visceral surgical prosthesis or prostatomegaly.,0.7,0.95
+findings,Concept_1114,40,"[128, 512, 2048, 8192]",,This cohort is characterized by significant displacement or dislocation of an anatomical structure or medical device.,0.9,0.95
+findings,Concept_231,40,"[128, 512, 2048, 8192]",splenomegaly,Gynecomastia.,0.95,0.9
+findings,Concept_901,40,"[128, 512, 2048, 8192]",atherosclerosis,Mitral annular calcification.,0.975,0.875
+findings,Concept_1015,40,"[128, 512, 2048, 8192]",cancer_liver_primary,A nodular liver contour consistent with cirrhosis and a recanalized umbilical vein.,0.9,1.0
+findings,Concept_312,40,"[128, 512, 2048, 8192]",pleural_effusion,Loculated fluid collections.,1.0,1.0
+findings,Concept_285,40,"[128, 512, 2048, 8192]",,This cohort is characterized by postsurgical changes of an ileal conduit.,1.0,1.0
+findings,Concept_1239,40,"[128, 512, 2048, 8192]",cancer_liver,"The presence of an intra-abdominal abscess or complicated fluid collection, or cavitary pulmonary lesions.",0.8,0.95
+findings,Concept_487,40,"[128, 512, 2048, 8192]",cancer_anywhere,Cardiac chamber enlargement (cardiomegaly or atrial enlargement) or significant calcific atherosclerosis of the coronary arteries or aorta.,0.75,0.65
+findings,Concept_161,40,"[128, 512, 2048, 8192]",cancer_liver,Evidence of prior ablation or embolization.,1.0,1.0
+findings,Concept_67,40,"[128, 512, 2048, 8192]",dementia,The presence of rib fractures.,0.85,0.9
+findings,Concept_4,40,"[128, 512, 2048, 8192]",pleural_effusion,The presence of a fluid collection or phlegmon.,0.75,0.55
+findings,Concept_99,40,"[128, 512, 2048, 8192]",acute_kidney_injury,Ground-glass opacities or consolidation in the lung bases.,0.9,0.85
+findings,Concept_1674,40,"[128, 512, 2048, 8192]",290.16,"Complex abdominal wall defects (including hernias, fistulas, and mesh) or extensive/complicated colonic diverticulosis.",0.75,0.75
+findings,Concept_933,40,"[128, 512, 2048, 8192]",pleural_effusion,The presence of ascites or abdominopelvic free fluid and pleural effusion.,0.8,0.85
+findings,Concept_344,40,"[128, 512, 2048, 8192]",atherosclerosis,Abnormalities of the prostate and/or seminal vesicles.,0.9,0.95
+findings,Concept_1065,40,"[128, 512, 2048, 8192]",,"This cohort is characterized by pathology involving the external iliac region, including lymph nodes or vessels.",0.95,0.95
+findings,Concept_228,40,"[128, 512, 2048, 8192]",dementia,The presence of pancreatic cystic lesion(s) consistent with a side branch Intraductal Papillary Mucinous Neoplasm (IPMN).,1.0,1.0
+findings,Concept_407,40,"[128, 512, 2048, 8192]",pleural_effusion,Postsurgical changes of distal pancreatectomy.,1.0,0.65
+findings,Concept_284,40,"[128, 512, 2048, 8192]",cancer_lung_primary,Postsurgical changes or findings of acute intra-abdominal inflammation.,0.6,0.5
+findings,Concept_74,40,"[128, 512, 2048, 8192]",pleural_effusion,The presence of extraluminal gas.,0.85,0.95
+findings,Concept_1569,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the presence of indwelling double-J stents.,0.85,0.95
+findings,Concept_43,40,"[128, 512, 2048, 8192]",submucosal_edema,Postsurgical changes from colorectal resection or severe inflammatory/infiltrative disease of the rectum and anus.,0.9,0.95
+findings,Concept_384,40,"[128, 512, 2048, 8192]",dementia,Osteopenia.,0.95,0.95
+findings,Concept_165,40,"[128, 512, 2048, 8192]",CVD_Heart_Failure,The congenital or surgical absence of an organ.,0.8,0.8
+findings,Concept_357,40,"[128, 512, 2048, 8192]",atherosclerosis,Findings of degenerative musculoskeletal disease or vascular pathology.,0.75,0.7
+findings,Concept_1594,40,"[128, 512, 2048, 8192]",cancer_lung_primary,The presence of biliary sludge within the gallbladder.,1.0,1.0
+findings,Concept_399,40,"[128, 512, 2048, 8192]",CVD_Heart_Failure,The presence of a pacemaker.,1.0,0.95
+findings,Concept_1073,40,"[128, 512, 2048, 8192]",,"This cohort is characterized by the presence of a complex abdominopelvic inflammatory process (such as an abscess, peritonitis, or fistula) or findings of disseminated malignancy (such as carcinomatosis or widespread metastases).",0.75,0.55
+findings,Concept_418,40,"[128, 512, 2048, 8192]",,This cohort is characterized by postsurgical changes of a Nissen fundoplication.,0.925,1.0
+findings,Concept_258,40,"[128, 512, 2048, 8192]",gout,The presence of an abdominal or pelvic fistula or fistulous tract.,0.95,0.95
+findings,Concept_1794,40,"[128, 512, 2048, 8192]",,This cohort is characterized by organ malrotation.,0.95,1.0
+findings,Concept_1690,40,"[128, 512, 2048, 8192]",,This cohort is characterized by severe or complicated atherosclerosis of the abdominal aorta.,0.85,0.9
+findings,Concept_415,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the presence of an infrarenal abdominal aortic aneurysm.,0.95,1.0
+findings,Concept_185,40,"[128, 512, 2048, 8192]",cancer_lung_primary,"Pleural or subpleural abnormalities, including nodules, plaques, thickening, or calcification.",0.95,0.85
+findings,Concept_359,40,"[128, 512, 2048, 8192]",pleural_effusion,Multiple loculated and rim-enhancing intra-abdominal or pelvic fluid collections.,0.95,0.8
+findings,Concept_1912,40,"[128, 512, 2048, 8192]",pleural_effusion,"Significant abnormalities in the visualized lung bases, such as pleural effusion, consolidation, or nodules/masses.",0.8,0.55
+findings,Concept_405,40,"[128, 512, 2048, 8192]",gout,Evidence of necrosis.,1.0,1.0
+findings,Concept_1,40,"[128, 512, 2048, 8192]",cvd,Degenerative changes of the spine.,0.75,0.6
+findings,Concept_498,40,"[128, 512, 2048, 8192]",bowel_obstruction,Postsurgical changes from major gastrointestinal resection.,0.85,0.5
+findings,Concept_412,40,"[128, 512, 2048, 8192]",cancer_pancreatic,Pathology of the hip joints.,0.9,0.9
+findings,Concept_1881,40,"[128, 512, 2048, 8192]",,This cohort is characterized by prostatomegaly.,1.0,0.95
+findings,Concept_990,40,"[128, 512, 2048, 8192]",surgically_absent_gallbladder,Pneumobilia.,1.0,0.975
+findings,Concept_60,40,"[128, 512, 2048, 8192]",cancer_liver_primary,The presence of multiple focal abnormalities within the parenchyma of solid abdominal organs or bone.,0.5,0.5
+findings,Concept_1603,40,"[128, 512, 2048, 8192]",cancer_liver_primary,The presence of a Transjugular Intrahepatic Portosystemic Shunt (TIPS) or a central venous catheter.,0.85,0.65
+findings,Concept_826,40,"[128, 512, 2048, 8192]",,This cohort is characterized by a primary malignancy of the gastrointestinal tract or pancreatobiliary system.,0.85,0.85
+findings,Concept_776,40,"[128, 512, 2048, 8192]",cancer_pancreatic_primary,Bibasilar findings in the lower thorax.,0.95,0.85
+findings,Concept_300,40,"[128, 512, 2048, 8192]",surgically_absent_gallbladder,Postsurgical changes of a Whipple procedure.,0.975,1.0
+findings,Concept_380,40,"[128, 512, 2048, 8192]",pleural_effusion,The presence of an enteral feeding tube.,0.975,1.0
+findings,Concept_2041,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the presence of a cardiac pacemaker or its components.,0.975,1.0
+findings,Concept_678,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the presence of an ileostomy.,0.925,0.925
+findings,Concept_892,40,"[128, 512, 2048, 8192]",surgically_absent_gallbladder,"Postsurgical changes of a biliary-enteric anastomosis (such as a choledochojejunostomy, hepaticojejunostomy, or choledochoduodenostomy).",0.975,0.55
+findings,Concept_535,40,"[128, 512, 2048, 8192]",cancer_pancreatic,The presence of coronary artery calcification or atherosclerosis.,0.95,0.9
+findings,Concept_197,40,"[128, 512, 2048, 8192]",pleural_effusion,Pancreatic necrosis or walled-off necrosis and associated peripancreatic fluid collections or pseudocysts.,0.95,0.975
+findings,Concept_1815,40,"[128, 512, 2048, 8192]",cancer_liver_primary,Ascites and stigmata of portal hypertension.,0.65,0.8
+findings,Concept_3993,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the presence of an adrenal adenoma.,0.9,0.9
+findings,Concept_783,40,"[128, 512, 2048, 8192]",cancer_liver_primary,Evidence of prior therapeutic vascular embolization.,0.95,1.0
+findings,Concept_82,40,"[128, 512, 2048, 8192]",osteoporosis,Findings of bronchiectasis in the visualized lung bases.,0.85,0.85
+findings,Concept_2018,40,"[128, 512, 2048, 8192]",pleural_effusion,Open or dehisced abdominal wall wounds.,0.8,0.6
+findings,Concept_346,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the presence of a gastric band.,0.6,0.8
+findings,Concept_3570,40,"[128, 512, 2048, 8192]",,This cohort is characterized by findings of atrial enlargement.,0.85,0.9
+findings,Concept_6710,40,"[128, 512, 2048, 8192]",,This cohort is characterized by fluid or a fluid collection located within a retroperitoneal space.,0.8,0.85
+findings,Concept_1878,40,"[128, 512, 2048, 8192]",,"This cohort is characterized by the presence of a large hiatal or paraesophageal hernia, often described as containing the stomach within the thorax.",1.0,0.95
+findings,Concept_302,40,"[128, 512, 2048, 8192]",CVD_Peripheral_Artery_Disease,Polycystic kidney disease and/or polyps.,1.0,0.9
+findings,Concept_1195,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the presence of an electronic medical device or a genitourinary prosthetic.,0.9,0.15
+findings,Concept_1681,40,"[128, 512, 2048, 8192]",surgically_absent_gallbladder,Patients who are status post hepaticojejunostomy and the presence of fluid collections such as pleural effusions or ascites.,0.5,0.7647058823529411
+findings,Concept_1644,40,"[128, 512, 2048, 8192]",bowel_obstruction,Postsurgical changes from partial or complete organ resection.,0.75,0.8
+findings,Concept_1617,40,"[128, 512, 2048, 8192]",,This cohort is characterized by an organized or loculated fluid collection or the presence of extraluminal gas.,0.45,0.65
+findings,Concept_1973,40,"[128, 512, 2048, 8192]",,This cohort is characterized by radiologic evidence of lymphoma.,0.95,0.95
+findings,Concept_221,40,"[128, 512, 2048, 8192]",CVD_Heart_Failure,Bilaterally atrophic or cystic kidneys and the presence of a dialysis catheter.,0.85,1.0
+findings,Concept_760,40,"[128, 512, 2048, 8192]",,"This cohort is characterized by evidence of a post-surgical anastomotic fistula or dehiscence, a hilar cholangiocarcinoma (Klatskin tumor), or severe chest wall trauma.",0.8,0.6
+findings,Concept_1481,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the presence of a gastrostomy or gastrojejunostomy tube.,0.9,1.0
+findings,Concept_381,40,"[128, 512, 2048, 8192]",pleural_effusion,A history of major abdominal surgery and the presence of persistent post-surgical complications or sequelae.,0.55,0.5
+findings,Concept_938,40,"[128, 512, 2048, 8192]",,This cohort is characterized by lung base consolidation or ground-glass opacities suggestive of an active inflammatory process like pneumonia or aspiration.,0.6111111111111112,0.65
+findings,Concept_1710,40,"[128, 512, 2048, 8192]",,"This cohort is characterized by the presence of major orthopedic hardware (involving the hip, femur, or spine) or findings of muscular or pancreatic atrophy.",0.7,0.7
+findings,Concept_416,40,"[128, 512, 2048, 8192]",,This cohort is characterized by bowel intussusception.,0.975,1.0
+findings,Concept_1031,40,"[128, 512, 2048, 8192]",,This cohort is characterized by diffuse bone demineralization.,0.9,0.95
+findings,Concept_1931,40,"[128, 512, 2048, 8192]",,This cohort is characterized by evidence of prior vertebroplasty.,0.925,1.0
+findings,Concept_1884,40,"[128, 512, 2048, 8192]",,This cohort is characterized by portal hypertension secondary to chronic liver disease.,0.625,0.7
+findings,Concept_355,40,"[128, 512, 2048, 8192]",,This cohort is characterized by findings of heterotopic ossification.,0.75,0.825
+findings,Concept_775,40,"[128, 512, 2048, 8192]",,This cohort is characterized by findings of recent or complicated abdominopelvic surgery.,0.75,0.55
+findings,Concept_283,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the presence of a ventricular assist device.,0.975,0.625
+findings,Concept_1581,40,"[128, 512, 2048, 8192]",cancer_liver_primary,Status post total proctocolectomy.,1.0,0.8
+findings,Concept_1708,40,"[128, 512, 2048, 8192]",,"This cohort is characterized by evidence of major surgical resection of the liver or pancreas, or disseminated malignancy involving the liver, pancreas, or biliary system.",0.55,0.75
+findings,Concept_701,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the presence of a Hartmann's pouch.,1.0,1.0
+findings,Concept_391,40,"[128, 512, 2048, 8192]",,This cohort is characterized by radiological stigmata of cystic fibrosis.,0.7,0.75
+findings,Concept_4895,40,"[128, 512, 2048, 8192]",,"This cohort is characterized by the presence of an intra-abdominal, pelvic, or abdominal wall abscess, or a fluid collection with rim enhancement or internal gas.",0.5714285714285714,0.6666666666666666
+findings,Concept_1120,40,"[128, 512, 2048, 8192]",,This cohort is characterized by a finding described as being 'short' in length or extent.,0.85,0.9
+image,Concept_87,40,"[128, 512, 2048, 8192]",cancer_liver_primary,This cohort is characterized by a surgically absent gallbladder or findings of cirrhosis or portal hypertension.,0.75,0.8
+image,Concept_21,40,"[128, 512, 2048, 8192]",cancer_liver_primary,This cohort is characterized by the presence of ascites.,0.85,0.9
+image,Concept_31,40,"[128, 512, 2048, 8192]",cancer_liver_primary,"This cohort is characterized by the presence of significant ascites, peritoneal or omental disease, or signs of portal hypertension.",0.65,0.75
+image,Concept_65,40,"[128, 512, 2048, 8192]",cancer_liver_primary,This cohort is characterized by splenomegaly.,0.85,0.95
+image,Concept_25,40,"[128, 512, 2048, 8192]",277.4,"This cohort is characterized by the presence of ascites, anasarca (widespread edema), or a pleural effusion that is more than trace in volume.",0.85,0.875
+image,Concept_114,40,"[128, 512, 2048, 8192]",277.4,This cohort is characterized by evidence of disseminated intra-abdominal malignancy or status post major oncologic resection of the liver or pancreas.,0.8,0.55
+image,Concept_125,40,"[128, 512, 2048, 8192]",renal_failure,This cohort is characterized by the presence of a therapeutic or life-support device (e.,0.75,0.7
+image,Concept_52,40,"[128, 512, 2048, 8192]",290.1,"This cohort is characterized by the absence of a complex abdominopelvic disease process, such as malignancy, systemic inflammation, or abscess.",0.65,0.55
+image,Concept_106,40,"[128, 512, 2048, 8192]",290.1,This cohort is characterized by the presence of both atherosclerotic disease and colonic pathology.,0.7,0.6
+image,Concept_20,40,"[128, 512, 2048, 8192]",600.0,This cohort is characterized by inflammation of the pancreas (pancreatitis) or a malignant-appearing mass in the pancreas or liver.,0.65,0.625
+image,Concept_28,40,"[128, 512, 2048, 8192]",286.4,"This cohort is characterized by findings indicating a chronic, systemic, or end-stage disease process.",0.75,0.7
+image,Concept_116,40,"[128, 512, 2048, 8192]",290.0,"This cohort is characterized by the presence of a hernia or a significant finding involving the musculoskeletal system (such as fracture, surgical hardware, abscess, or advanced degenerative disease).",0.7,0.5
+image,Concept_95,40,"[128, 512, 2048, 8192]",600.0,This cohort is characterized by abnormalities of the bladder or prostate.,0.65,0.6
+image,Concept_26,40,"[128, 512, 2048, 8192]",CVD_Heart_Failure,This cohort is characterized by atherosclerotic disease of the aorta.,0.55,0.6
+image,Concept_17,40,"[128, 512, 2048, 8192]",260.1,This cohort is characterized by findings of advanced malignancy or major organ failure/transplantation.,0.7,0.8
+image,Concept_15,40,"[128, 512, 2048, 8192]",600.0,"This cohort is characterized by findings of moderate to severe, extensive, or complicated abdominopelvic atherosclerotic disease.",0.75,0.75
+image,Concept_109,40,"[128, 512, 2048, 8192]",290.1,This cohort is characterized by the presence of an infiltrative or diffuse soft tissue or parenchymal abnormality.,0.65,0.3
+image,Concept_44,40,"[128, 512, 2048, 8192]",290.1,This cohort is characterized by the presence of degenerative changes involving the spine.,0.6,0.6
+image,Concept_67,40,"[128, 512, 2048, 8192]",260.1,This cohort is characterized by findings of advanced abdominopelvic malignancy or its major surgical treatment.,0.8,0.6
+image,Concept_331,40,"[128, 512, 2048, 8192]",cancer_liver_primary,This cohort is characterized by findings of chronic liver disease (such as cirrhosis) or hepatic congestion.,0.9,0.95
+image,Concept_78,40,"[128, 512, 2048, 8192]",277.4,This cohort is characterized by findings of an active intra-abdominal inflammatory process or bowel obstruction.,0.65,0.75
+image,Concept_46,40,"[128, 512, 2048, 8192]",260.1,This cohort is characterized by the presence of an intra-abdominal abscess or peritonitis.,0.7,0.6
+image,Concept_1674,40,"[128, 512, 2048, 8192]",286.4,This cohort is characterized by moderate to severe biliary ductal dilatation or the presence of a biliary stent or drain.,0.8,1.0
+image,Concept_96,40,"[128, 512, 2048, 8192]",290.0,This cohort is characterized by dilation of the biliary or pancreatic ducts.,0.5,0.35
+image,Concept_70,40,"[128, 512, 2048, 8192]",277.4,This cohort is characterized by postsurgical changes involving the pancreas or liver.,0.95,0.9
+image,Concept_83,40,"[128, 512, 2048, 8192]",renal_failure,This cohort is characterized by the presence of pleural effusion.,0.95,1.0
+image,Concept_76,40,"[128, 512, 2048, 8192]",707.1,This cohort is characterized by findings of acute inflammation or obstruction of the bowel or bladder.,0.35,0.55
+image,Concept_74,40,"[128, 512, 2048, 8192]",600.0,This cohort is characterized by the presence of hepatic steatosis (fatty liver).,0.4,0.5
+image,Concept_59,40,"[128, 512, 2048, 8192]",renal_failure,"This cohort is characterized by an organized fluid collection, necrosis, or inflammation involving the pancreas or pancreatic bed.",0.85,0.7
+image,Concept_353,40,"[128, 512, 2048, 8192]",290.16,"This cohort is characterized by findings of pancreatic atrophy or pancreas divisum, or the presence of spinal fusion or joint arthroplasty.",0.7,0.8
+image,Concept_39,40,"[128, 512, 2048, 8192]",260.1,"This cohort is characterized by a fluid collection, abscess, or leak at a surgical anastomosis or resection site.",0.85,0.85
+image,Concept_7,40,"[128, 512, 2048, 8192]",renal_failure,This cohort is characterized by the presence of an ostomy (e.,0.9,0.9
+image,Concept_119,40,"[128, 512, 2048, 8192]",260.1,"This cohort is characterized by a history of major surgical resection or reconstruction of the gastrointestinal or urinary tracts, such as a colectomy, cystectomy, or the creation of a stoma or urinary conduit.",0.8,0.7
+image,Concept_117,40,"[128, 512, 2048, 8192]",290.1,"This cohort is characterized by abnormalities involving the biliary system or the urothelium, such as ductal dilatation, wall thickening, or abnormal enhancement.",0.6,0.45
+image,Concept_6,40,"[128, 512, 2048, 8192]",290.16,This cohort is characterized by the presence of an anterior abdominal wall hernia or splenomegaly.,0.75,0.65
+image,Concept_3,40,"[128, 512, 2048, 8192]",260.1,This cohort is characterized by findings of bowel obstruction.,0.8,0.7
+image,Concept_454,40,"[128, 512, 2048, 8192]",277.4,This cohort is characterized by biliary ductal dilatation.,0.95,0.75
+image,Concept_650,40,"[128, 512, 2048, 8192]",277.4,This cohort is characterized by findings indicative of primary or metastatic intra-abdominal malignancy.,0.65,0.675
+image,Concept_102,40,"[128, 512, 2048, 8192]",290.1,This cohort is characterized by the presence of orthopedic hardware.,0.85,0.75
+image,Concept_260,40,"[128, 512, 2048, 8192]",428.4,This cohort is characterized by the presence of pleural effusion.,0.9,0.95
+image,Concept_347,40,"[128, 512, 2048, 8192]",hyponatremia,This cohort is characterized by evidence of major pancreatic pathology or surgical resection.,0.9,0.8
+image,Concept_90,40,"[128, 512, 2048, 8192]",707.1,"This cohort is characterized by findings indicative of physical trauma, such as osseous fracture, organ injury, or soft tissue hematoma.",0.65,0.55
+image,Concept_35,40,"[128, 512, 2048, 8192]",acute_kidney_injury,"This cohort is characterized by the presence of an enteric tube, an indwelling bladder catheter, or diffuse subcutaneous edema (anasarca).",0.75,0.85
+image,Concept_154,40,"[128, 512, 2048, 8192]",290.0,This cohort is characterized by the presence of intrahepatic biliary ductal dilatation or pancreatitis.,0.8,0.65
+image,Concept_165,40,"[128, 512, 2048, 8192]",CVD_Heart_Failure,This cohort is characterized by the presence of an implanted cardiac device (e.,0.95,0.8
+image,Concept_127,40,"[128, 512, 2048, 8192]",290.16,This cohort is characterized by evidence of prior cholecystectomy or biliary ductal dilatation.,0.7,0.9
+image,Concept_7223,40,"[128, 512, 2048, 8192]",acute_kidney_injury,"This cohort is characterized by the presence of an abscess, inflammatory fluid collection, or fistula.",0.6,0.7
+image,Concept_1424,40,"[128, 512, 2048, 8192]",290.1,This cohort is characterized by the presence of biliary ductal dilatation or pancreatic cystic lesions.,0.7,0.6
+image,Concept_495,40,"[128, 512, 2048, 8192]",286.4,"This cohort is characterized by the presence of a therapeutic tube, drain, stent, or surgical bypass of the gastrointestinal, pancreatic, or biliary tract.",0.8,0.75
+image,Concept_398,40,"[128, 512, 2048, 8192]",260.1,"This cohort is characterized by findings related to urinary tract obstruction, such as hydronephrosis or the presence of a ureteral stent or nephrostomy tube.",0.95,0.9
+image,Concept_7795,40,"[128, 512, 2048, 8192]",290.0,"This cohort is characterized by the presence of bowel or biliary obstruction, or splanchnic vascular compromise.",0.75,0.9
+image,Concept_1413,40,"[128, 512, 2048, 8192]",260.1,"This cohort is characterized by findings indicating management of an intra-abdominal abscess, organized fluid collection, or visceral obstruction.",0.85,1.0
+image,Concept_38,40,"[128, 512, 2048, 8192]",renal_failure,This cohort is characterized by the presence of an intra-abdominal fluid collection or significant visceral/mesenteric inflammation.,0.65,0.8
+image,Concept_1587,40,"[128, 512, 2048, 8192]",290.16,"This cohort is characterized by the absence of acute intra-abdominal findings such as inflammation, obstruction, or active fluid collection.",0.6,0.5
+image,Concept_11,40,"[128, 512, 2048, 8192]",acute_kidney_injury,This cohort is characterized by the presence of a pleural effusion.,0.85,0.95
+image,Concept_489,40,"[128, 512, 2048, 8192]",290.1,This cohort is characterized by the presence of a moderate to large colonic stool burden without findings of ileus.,0.7,0.65
+image,Concept_192,40,"[128, 512, 2048, 8192]",428.4,This cohort is characterized by stigmata of portal hypertension or systemic venous congestion.,0.7,0.7
+image,Concept_1230,40,"[128, 512, 2048, 8192]",cancer_liver_primary,This cohort is characterized by enlargement of the liver or spleen.,0.6,0.5
+image,Concept_5,40,"[128, 512, 2048, 8192]",CVD_Heart_Failure,"This cohort is characterized by the presence of abnormal fat stranding, soft tissue infiltration, organ or bowel wall thickening, or a destructive osseous lesion.",0.65,0.65
+image,Concept_722,40,"[128, 512, 2048, 8192]",290.0,This cohort is characterized by a surgically absent gallbladder (status post cholecystectomy).,0.7,0.85
+image,Concept_452,40,"[128, 512, 2048, 8192]",707.1,"This cohort is characterized by findings of rectal impaction or inflammation, and/or bladder wall thickening.",0.7,0.5
+image,Concept_307,40,"[128, 512, 2048, 8192]",401.21,This cohort is characterized by findings of structural heart disease or cardiac intervention.,0.75,0.8
+image,Concept_121,40,"[128, 512, 2048, 8192]",260.1,This cohort is characterized by significant or complicated inflammatory or obstructive bowel disease.,0.7,0.85
+image,Concept_1459,40,"[128, 512, 2048, 8192]",707.1,"This cohort is characterized by findings of systemic wasting or severe deconditioning, such as osteopenia, diffuse muscle atrophy, or anasarca.",0.6,0.8
+image,Concept_1416,40,"[128, 512, 2048, 8192]",277.4,This cohort is characterized by findings related to biliary tract obstruction or intervention.,0.85,0.95
+image,Concept_276,40,"[128, 512, 2048, 8192]",ckd,This cohort is characterized by the presence of atherosclerotic vascular disease.,0.85,0.65
+image,Concept_43,40,"[128, 512, 2048, 8192]",CVD_Heart_Failure,"This cohort is characterized by a space-occupying process (such as a mass, enlarged organ, or inflammation) causing mass effect on adjacent structures.",0.45,0.6
+image,Concept_5321,40,"[128, 512, 2048, 8192]",renal_failure,"This cohort is characterized by the presence of ascites, anasarca, or an abscess.",0.75,0.85
+image,Concept_105,40,"[128, 512, 2048, 8192]",renal_failure,This cohort is characterized by the presence of an organized intra-abdominal or retroperitoneal fluid collection.,0.7,0.75
+image,Concept_1817,40,"[128, 512, 2048, 8192]",428.4,"This cohort is characterized by findings of systemic fluid overload or third-space accumulation, such as ascites, pleural effusion, or anasarca.",0.6,0.75
+image,Concept_193,40,"[128, 512, 2048, 8192]",600.0,This cohort is characterized by evidence of prior intra-abdominal surgery or acute diverticulitis.,0.55,0.55
+image,Concept_54,40,"[128, 512, 2048, 8192]",260.1,This cohort is characterized by the presence of an intra-abdominal or pelvic abscess or complex fluid collection.,0.7,0.4
+image,Concept_284,40,"[128, 512, 2048, 8192]",sepsis,"This cohort is characterized by chronic, severe musculoskeletal abnormalities of the spine or pelvis.",0.65,0.7
+image,Concept_202,40,"[128, 512, 2048, 8192]",cancer_liver_primary,This cohort is characterized by findings of end-stage liver disease (cirrhosis with portal hypertension) or advanced intra-abdominal malignancy.,0.75,0.55
+image,Concept_427,40,"[128, 512, 2048, 8192]",290.0,This cohort is characterized by a significant acute intra-abdominal finding.,0.5,0.4
+image,Concept_262,40,"[128, 512, 2048, 8192]",cancer_liver_primary,"This cohort is characterized by abnormal fluid accumulation, manifesting as either fluid in multiple body compartments (e.",0.75,0.8
+image,Concept_7800,40,"[128, 512, 2048, 8192]",cancer_liver_primary,This cohort is characterized by a surgically absent gallbladder.,0.875,0.8
+image,Concept_55,40,"[128, 512, 2048, 8192]",600.0,"This cohort is characterized by the presence of a complex or organized fluid collection, often with features of infection such as peripheral rim enhancement or internal gas.",0.55,0.65
+image,Concept_5003,40,"[128, 512, 2048, 8192]",290.1,"This cohort is characterized by findings of bowel obstruction, ileus, significant bowel wall thickening, major post-surgical changes to the bowel (such as resection or ostomy), or a hernia containing bowel or omentum.",0.65,0.4
+image,Concept_447,40,"[128, 512, 2048, 8192]",277.4,"This cohort is characterized by pathologic changes of the peritoneum, such as thickening, enhancement, nodularity, omental caking, or the presence of moderate-to-large volume ascites.",0.9,0.85
+image,Concept_345,40,"[128, 512, 2048, 8192]",260.1,"This cohort is characterized by evidence of a primary pancreatic or biliary malignancy (such as a mass, IPMN, or Klatskin tumor) or a history of major surgical resection for such a malignancy (e.",0.75,0.675
+image,Concept_12,40,"[128, 512, 2048, 8192]",260.1,"This cohort is characterized by findings of a post-surgical complication, such as an organized fluid collection, abscess, leak, or fistula.",0.75,0.9
+image,Concept_426,40,"[128, 512, 2048, 8192]",cancer_liver_primary,This cohort is characterized by a surgically absent gallbladder with associated findings of either biliary ductal dilatation or pneumobilia.,0.9,0.9
+image,Concept_478,40,"[128, 512, 2048, 8192]",286.4,This cohort is characterized by a hepatic abscess or other complex fluid collection.,0.85,0.8
+image,Concept_1015,40,"[128, 512, 2048, 8192]",290.1,This cohort is characterized by the presence of hip arthroplasty.,1.0,1.0
+image,Concept_453,40,"[128, 512, 2048, 8192]",290.1,This cohort is characterized by significant degenerative or postsurgical disease of the spine.,0.5,0.7
+image,Concept_155,40,"[128, 512, 2048, 8192]",acute_kidney_injury,"This cohort is characterized by mechanical bowel obstruction or sequelae of bowel perforation (such as abscess, fistula, or extraluminal gas).",0.75,0.7
+image,Concept_258,40,"[128, 512, 2048, 8192]",290.16,This cohort is characterized by findings of urolithiasis (renal or ureteral calculi) or signs of urinary tract obstruction (such as hydronephrosis or hydroureter).,0.55,0.6
+image,Concept_414,40,"[128, 512, 2048, 8192]",290.1,This cohort is characterized by findings indicating hepatobiliary obstruction or congestion.,0.9,0.55
+image,Concept_608,40,"[128, 512, 2048, 8192]",acute_kidney_injury,"This cohort is characterized by evidence of prior surgical resection of the spleen, pancreas, or kidney.",0.85,0.55
+image,Concept_3966,40,"[128, 512, 2048, 8192]",ckd,This cohort is characterized by the presence of multiple complex or loculated intra-abdominal fluid collections.,0.7,0.7
+image,Concept_1154,40,"[128, 512, 2048, 8192]",290.16,This cohort is characterized by the presence of a hernia or evidence of prior hernia repair.,0.8,0.6
+image,Concept_386,40,"[128, 512, 2048, 8192]",290.1,This cohort is characterized by findings of bowel obstruction.,0.9,0.9
+image,Concept_8083,40,"[128, 512, 2048, 8192]",renal_failure,"This cohort is characterized by concurrent findings of biliary obstruction or intervention and associated occlusion or encasement of the peripancreatic veins (portal, splenic, or superior mesenteric).",0.8,0.575
+image,Concept_1183,40,"[128, 512, 2048, 8192]",290.16,"This cohort is characterized by findings of a primary, non-malignant abdominal process.",0.5,0.7
+image,Concept_491,40,"[128, 512, 2048, 8192]",renal_failure,This cohort is characterized by the presence of a surgically created ostomy for urinary or fecal diversion.,0.95,0.95
+image,Concept_338,40,"[128, 512, 2048, 8192]",sepsis,"This cohort is characterized by the presence of musculoskeletal hardware or a significant deformity involving the spine, pelvis, or hips.",0.75,0.55
+image,Concept_175,40,"[128, 512, 2048, 8192]",acute_kidney_injury,"This cohort is characterized by findings of an acute inflammatory process or complication, such as consolidation, a fluid collection, or extraluminal gas.",0.65,0.65
+image,Concept_334,40,"[128, 512, 2048, 8192]",401.21,This cohort is characterized by findings of atherosclerotic vascular disease.,0.6,0.55
+labs,Concept_108,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,"Lab values indicating cholestasis, such as significantly elevated Alkaline Phosphatase or Bilirubin.",0.75,0.8
+labs,Concept_104,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,Laboratory findings indicative of iron deficiency anemia.,0.9,0.9
+labs,Concept_84,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,Azotemia (elevated serum creatinine and/or blood urea nitrogen).,0.65,0.85
+labs,Concept_87,40,"[128, 512, 2048, 8192]",cancer_anywhere,The presence of anemia and hypoalbuminemia.,0.75,0.9
+labs,Concept_127,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,"The presence of a cytopenia (anemia, leukopenia, or thrombocytopenia) or a high Red Cell Distribution Width (RDW).",0.9,1.0
+labs,Concept_94,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,A low serum albumin level.,0.75,0.85
+labs,Concept_33,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,A significantly elevated Alkaline Phosphatase or a significantly elevated Globulin.,0.9,0.6
+labs,Concept_91,40,"[128, 512, 2048, 8192]",gout,Severe hypoalbuminemia.,0.8,0.95
+labs,Concept_2,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,The presence of either significantly elevated markers of cholestasis (such as Alkaline Phosphatase) or metabolic acidosis.,0.95,0.9
+labs,Concept_62,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,Low serum albumin.,0.8,0.75
+labs,Concept_61,40,"[128, 512, 2048, 8192]",gout,Low hemoglobin and/or hematocrit.,0.8,0.9
+labs,Concept_124,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,Low serum albumin.,0.75,0.85
+labs,Concept_82,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,Severely low serum albumin.,0.75,0.95
+labs,Concept_34,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,The concurrent finding of low serum albumin and anemia (low hemoglobin or hematocrit).,0.95,0.95
+labs,Concept_35,40,"[128, 512, 2048, 8192]",diabetes,Low serum albumin.,0.8,0.75
+labs,Concept_26,40,"[128, 512, 2048, 8192]",,"This cohort is characterized by hypoalbuminemia, often in the context of metabolic acidosis, anemia, or other signs of acute end-organ dysfunction.",0.75,0.6
+labs,Concept_77,40,"[128, 512, 2048, 8192]",renal_failure,Low serum albumin.,0.85,0.65
+labs,Concept_5,40,"[128, 512, 2048, 8192]",dementia,Elevated hemoglobin or hematocrit levels.,0.85,0.75
+labs,Concept_311,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the absence of any strongly abnormal lab value.,0.45,0.45
+labs,Concept_122,40,"[128, 512, 2048, 8192]",gout,"Severely reduced hemoglobin levels, low hematocrit values, and microcytic hypochromic red blood cells, along with elevated RDW (red cell distribution width) and low MCV (mean corpuscular volume), indicating a significant degree of anemia and marked variation in red blood cell size and shape.",0.85,0.75
+labs,Concept_39,40,"[128, 512, 2048, 8192]",cancer_anywhere,Abnormalities in myeloid cell lines (e.,0.7,0.7
+labs,Concept_41,40,"[128, 512, 2048, 8192]",277.4,The presence of significant anemia or metabolic acidosis.,0.95,0.9
+labs,Concept_37,40,"[128, 512, 2048, 8192]",277.4,"Severe derangement of metabolic, renal, or hepatic function.",0.9,0.9
+labs,Concept_4,40,"[128, 512, 2048, 8192]",gout,A high percentage of neutrophils and a low percentage of monocytes in the white blood cell differential count.,0.85,1.0
+labs,Concept_2358,40,"[128, 512, 2048, 8192]",dementia,"Severely elevated creatinine levels (serum and ISTAT measurements) and a high anion gap, indicating significant renal impairment and metabolic acidosis.",1.0,0.95
+labs,Concept_59,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,Low serum albumin.,0.85,0.8
+labs,Concept_21,40,"[128, 512, 2048, 8192]",diabetes,Thrombocytosis (elevated platelet count) or anemia with features of iron deficiency.,0.9,0.95
+labs,Concept_45,40,"[128, 512, 2048, 8192]",,"This cohort is characterized by severe hypoalbuminemia, with a serum albumin level below 3.",0.8,0.35
+labs,Concept_595,40,"[128, 512, 2048, 8192]",cancer_liver_primary,An elevated serum total bilirubin level.,1.0,0.95
+labs,Concept_121,40,"[128, 512, 2048, 8192]",427.22,An elevated monocyte count.,0.75,0.75
+labs,Concept_496,40,"[128, 512, 2048, 8192]",diabetes,"Extremely high levels of glucose and hemoglobin A1c, along with significant abnormalities in electrolyte and acid-base balance, particularly low pH and bicarbonate levels, and elevated liver enzymes.",0.9,0.85
+labs,Concept_36,40,"[128, 512, 2048, 8192]",277.4,The concurrent findings of anemia (low hemoglobin or hematocrit) and low serum protein (low total protein or albumin).,0.9,1.0
+labs,Concept_105,40,"[128, 512, 2048, 8192]",cvd,A serum albumin level below 2.,0.6,0.65
+labs,Concept_88,40,"[128, 512, 2048, 8192]",290.1,Elevated serum bicarbonate (total CO2).,0.6,0.45
+labs,Concept_1157,40,"[128, 512, 2048, 8192]",,This cohort is characterized by significant abnormalities in the complete blood count or the presence of severe metabolic acidosis.,0.9,0.75
+labs,Concept_0,40,"[128, 512, 2048, 8192]",cancer_anywhere,"An elevated monocyte count (monocytosis), as measured by absolute count or percentage.",0.9,0.8
+labs,Concept_590,40,"[128, 512, 2048, 8192]",286.4,An elevated total alkaline phosphatase (Alk P'TASE) level.,0.85,0.9
+labs,Concept_573,40,"[128, 512, 2048, 8192]",286.4,The presence of a cell count analysis performed on a body fluid sample.,0.7,0.75
+labs,Concept_181,40,"[128, 512, 2048, 8192]",427.22,An elevated venous bicarbonate (HCO3) level from an ISTAT blood gas analysis.,1.0,0.7
+labs,Concept_68,40,"[128, 512, 2048, 8192]",gout,An elevated count of neutrophils or monocytes.,0.7,0.85
+labs,Concept_1488,40,"[128, 512, 2048, 8192]",401.21,Low serum albumin.,0.6,0.6
+labs,Concept_323,40,"[128, 512, 2048, 8192]",cancer_abdomen_primary,Low serum albumin.,0.55,0.7
+labs,Concept_30,40,"[128, 512, 2048, 8192]",cancer_anywhere,"Having had a plasma ammonia, total bilirubin, or total protein test performed.",0.6,0.8
+labs,Concept_288,40,"[128, 512, 2048, 8192]",,This cohort is characterized by low serum calcium.,0.95,0.45
+labs,Concept_1590,40,"[128, 512, 2048, 8192]",osteoporosis,Elevated band neutrophils.,0.85,0.5
+labs,Concept_69,40,"[128, 512, 2048, 8192]",,This cohort is characterized by laboratory values indicating impaired renal function.,0.75,0.85
+labs,Concept_1550,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the presence of a measurement for ionized calcium.,0.725,0.75
+labs,Concept_820,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the measurement of Cancer Antigen 19-9.,0.95,0.45
+labs,Concept_230,40,"[128, 512, 2048, 8192]",,"This cohort is characterized by an electrolyte abnormality, specifically involving either hyponatremia (low serum sodium) or hyperchloremia (high serum chloride).",0.75,0.85
+labs,Concept_1507,40,"[128, 512, 2048, 8192]",acute_kidney_injury,Elevated serum calcium.,0.4,0.45
+labs,Concept_1121,40,"[128, 512, 2048, 8192]",,"This cohort is characterized by elevated blood urea nitrogen (BUN) or creatinine, or low serum albumin.",0.85,0.9
+labs,Concept_173,40,"[128, 512, 2048, 8192]",277.4,A total serum alkaline phosphatase (Alk Phos) level greater than 230 U/L.,0.95,0.85
+labs,Concept_54,40,"[128, 512, 2048, 8192]",cvd,"A high prevalence of severe leukocytosis, specifically elevated band neutrophils and segmented neutrophils, along with marked left ventricular ejection fraction reduction and severe metabolic acidosis.",0.75,0.4
+labs,Concept_481,40,"[128, 512, 2048, 8192]",cvd,"Extremely elevated levels of cholesterol, particularly direct LDL cholesterol and total cholesterol, along with a high LDL/HDL ratio, which are significantly more pronounced than in the reference patients.",0.85,0.85
+labs,Concept_184,40,"[128, 512, 2048, 8192]",,This cohort is characterized by abnormal cholesterol panel results.,0.9,0.85
+labs,Concept_139,40,"[128, 512, 2048, 8192]",acute_kidney_injury,The presence of arterial or venous blood gas analysis results.,0.85,0.2
+labs,Concept_605,40,"[128, 512, 2048, 8192]",,This cohort is characterized by an elevated Erythrocyte Sedimentation Rate (ESR).,1.0,0.65
+labs,Concept_1182,40,"[128, 512, 2048, 8192]",,This cohort is characterized by a decreased point-of-care (ISTAT) hemoglobin or hematocrit value.,0.9,0.75
+labs,Concept_2524,40,"[128, 512, 2048, 8192]",286.4,The presence of a plasma ammonia lab test result.,0.925,1.0
+labs,Concept_110,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the presence of hypocalcemia or neutrophilia.,0.85,0.8
+labs,Concept_796,40,"[128, 512, 2048, 8192]",,This cohort is characterized by an elevated Red Cell Distribution Width (RDW).,1.0,1.0
+labs,Concept_974,40,"[128, 512, 2048, 8192]",,This cohort is characterized by a reduced estimated glomerular filtration rate (eGFR).,0.85,0.85
+labs,Concept_1460,40,"[128, 512, 2048, 8192]",290.0,An elevated eosinophil count.,0.8,0.95
+labs,Concept_92,40,"[128, 512, 2048, 8192]",,This cohort is characterized by monocytosis or neutrophilia.,0.8,0.9
+labs,Concept_269,40,"[128, 512, 2048, 8192]",cancer_anywhere,"Extremely elevated RDW (Red Cell Distribution Width) and RDW (Red Cell Distribution Width) values, with RDW ranging from 19.",1.0,1.0
+labs,Concept_1478,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the presence of a manual neutrophil count.,0.95,1.0
+labs,Concept_74,40,"[128, 512, 2048, 8192]",gout,"Elevated neutrophil percentages and absolute counts, along with high globulin levels and abnormal blood gas parameters, specifically low pH and bicarbonate levels, indicating metabolic acidosis.",0.5,0.2
+labs,Concept_211,40,"[128, 512, 2048, 8192]",,This cohort is characterized by low serum bicarbonate.,0.75,0.0
+labs,Concept_60,40,"[128, 512, 2048, 8192]",gout,"Markedly elevated platelet counts and high levels of globulin, with platelet counts ranging from 562 to 746 K/uL and globulin levels from 4.",0.6,0.65
+labs,Concept_455,40,"[128, 512, 2048, 8192]",,This cohort is characterized by metabolic acidosis.,0.75,0.55
+labs,Concept_316,40,"[128, 512, 2048, 8192]",,This cohort is characterized by respiratory acidosis.,0.95,0.7
+labs,Concept_1283,40,"[128, 512, 2048, 8192]",,This cohort is characterized by severely elevated blood glucose levels.,0.9,0.9
+labs,Concept_4268,40,"[128, 512, 2048, 8192]",,This cohort is characterized by low hemoglobin (HgB).,0.9,0.15
+labs,Concept_508,40,"[128, 512, 2048, 8192]",,This cohort is characterized by low serum albumin.,0.7,0.6
+labs,Concept_6965,40,"[128, 512, 2048, 8192]",,"This cohort is characterized by laboratory findings suggestive of chronic liver disease, such as hyperglobulinemia or cytopenias.",0.75,0.75
+labs,Concept_182,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the presence of a reported International Normalized Ratio (INR) or Non-HDL Cholesterol value.,1.0,0.6
+labs,Concept_1275,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the presence of hypoalbuminemia or markedly elevated alkaline phosphatase.,0.75,0.6
+labs,Concept_2814,40,"[128, 512, 2048, 8192]",,This cohort is characterized by the presence of a plasma ammonia test or a blood gas component with a specified sample source (arterial or venous).,0.75,0.7
+labs,Concept_5922,40,"[128, 512, 2048, 8192]",osteoporosis,"A high prevalence of lymphocytosis, with lymphocyte percentages and absolute counts significantly elevated above normal ranges, along with marked polycythemia and a relative increase in monocytes.",0.95,0.65
+labs,Concept_381,40,"[128, 512, 2048, 8192]",cvd,"Elevated lactate levels and severe metabolic acidosis, as evidenced by low bicarbonate (HCO3) and base excess (BE) values, along with high anion gap, in conjunction with significantly increased heart rate and respiratory rate, and marked leukocytosis with a predominance of neutrophils.",0.95,0.0
+labs,Concept_852,40,"[128, 512, 2048, 8192]",,This cohort is characterized by low serum cholesterol levels.,0.8,0.95
+labs,Concept_1450,40,"[128, 512, 2048, 8192]",,This cohort is characterized by evidence of anemia or decreased oxygen-carrying capacity of the blood.,0.4,0.25
+labs,Concept_6073,40,"[128, 512, 2048, 8192]",,This cohort is characterized by low hemoglobin or hematocrit.,0.6,0.5
+labs,Concept_1111,40,"[128, 512, 2048, 8192]",osteoporosis,"Extremely elevated levels of CO2 and HCO3, along with significantly increased anion gap, indicating metabolic alkalosis or respiratory acidosis, and high levels of globulin and protein in the blood.",0.55,0.2
+labs,Concept_1653,40,"[128, 512, 2048, 8192]",,This cohort is characterized by elevated bicarbonate (HCO3) levels.,0.65,0.4
