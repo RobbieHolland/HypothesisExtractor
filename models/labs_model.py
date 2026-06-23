@@ -135,6 +135,11 @@ class LabsDataset(Dataset):
         labs = labs.dropna(subset=["value"])
 
         n_total_rows = len(labs)
+        input_codes = set(labs["loinc_code"].dropna())
+        matched_codes = input_codes.intersection(loinc_to_lab_id)
+        unmatched_codes = input_codes - matched_codes
+        rows_per_code = labs.groupby("loinc_code").size()
+
         labs["lab_id"] = labs["loinc_code"].map(loinc_to_lab_id)
         n_loinc_matched = labs["lab_id"].notna().sum()
         labs = labs.dropna(subset=["lab_id"])
@@ -142,10 +147,16 @@ class LabsDataset(Dataset):
         labs = labs[labs["lab_id"].isin(retained_ids)]
         n_retained = len(labs)
 
-        n_loinc_total = labs_df["loinc_code"].nunique()
-        n_loinc_mapped = len(set(labs_df["loinc_code"]).intersection(loinc_to_lab_id))
-        print(f"LOINC mapping: {n_loinc_mapped}/{n_loinc_total} unique codes mapped")
+        loinc_name = loinc_map.groupby("loinc_code")["name"].apply(lambda x: ", ".join(x.unique()))
+        print(f"LOINC mapping: {len(matched_codes)}/{len(input_codes)} unique codes mapped")
         print(f"Lab rows: {n_loinc_matched}/{n_total_rows} mapped to a known LOINC, {n_retained} retained after model filter")
+        print("Matched LOINC codes:")
+        for code in sorted(matched_codes, key=lambda c: -rows_per_code.get(c, 0)):
+            print(f"  {code}  {loinc_name.get(code, '')}  ({rows_per_code.get(code, 0)} rows)")
+        if unmatched_codes:
+            print(f"Unmatched LOINC codes ({len(unmatched_codes)}):")
+            for code in sorted(unmatched_codes):
+                print(f"  {code}  ({rows_per_code.get(code, 0)} rows)")
 
         # Warn about likely unit mismatches: labs where >50% of values are >5σ from training mean
         meta_idx = labs_metadata.set_index("lab_id")
