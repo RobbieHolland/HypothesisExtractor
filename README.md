@@ -1,6 +1,6 @@
 # HypothesisExtractor
 
-Extracts foundation model embeddings and longitudinal outcome labels from CT imaging and radiology report data.
+Extracts foundation model embeddings and longitudinal outcome labels from CT imaging, radiology report, and laboratory data.
 
 ## Requirements
 
@@ -37,8 +37,10 @@ One row per sample:
 | `sample_id` | Unique string identifier for each sample |
 | `patient_id` | Patient identifier (patients may have multiple samples) |
 | `date` | Acquisition date (any parseable date string) |
-| `ct_path` | Path to the NIfTI CT file for this sample |
-| `report_path` | Path to the radiology report text file for this sample |
+| `ct_path` | Path to the NIfTI CT file for this sample *(optional)* |
+| `report_path` | Path to the radiology report text file for this sample *(optional)* |
+
+Each modality is only processed when its path column is present.
 
 ### diagnoses.csv
 One row per ICD code event:
@@ -50,6 +52,20 @@ One row per ICD code event:
 | `icd9` | ICD-9 code (leave blank if ICD-10) |
 | `icd10` | ICD-10 code (leave blank if ICD-9) |
 
+### labs.csv *(optional)*
+One row per lab result:
+
+| Column | Description |
+|--------|-------------|
+| `patient_id` | Patient identifier, matching `metadata.csv` |
+| `date` | Date the lab was collected |
+| `loinc_code` | LOINC code identifying the lab test |
+| `value` | Numeric result value |
+
+Set `paths.labs_csv` in `config/config.yaml` to enable lab embedding extraction. The LOINC mapping and pretrained encoder are bundled in `data/mappings/` and require no configuration.
+
+Labs are filtered to the 6-month window prior to each scan date and quarterly-downsampled before embedding. Samples with no labs in that window are omitted from `lab_embeddings.pt`.
+
 ## Running
 
 ```bash
@@ -60,8 +76,9 @@ python run.py
 
 All outputs are written to `out/` (configurable via `paths.out_dir`):
 
-- **`ct_embeddings.pt`** — `{'embeddings': Tensor[N, M], 'sample_ids': [...]}`
-- **`report_embeddings.pt`** — `{'embeddings': Tensor[N, M], 'sample_ids': [...]}`
+- **`ct_embeddings.pt`** — `{'embeddings': Tensor[N, 2048], 'sample_ids': [...]}`
+- **`report_embeddings.pt`** — `{'embeddings': Tensor[N, 4096], 'sample_ids': [...]}`
+- **`lab_embeddings.pt`** — `{'embeddings': Tensor[N, 768], 'sample_ids': [...]}` *(N may be less than total samples if some have no labs in window)*
 - **`outcomes.pkl`** — DataFrame with one row per sample. For each task: `{task}_event` (0/1) and `{task}_time` (days from scan date to first event, or to last recorded ICD date if no event). Times include Gaussian anonymization jitter (σ=3 days).
 
 ICD-to-task mappings are in `data/mappings/`.

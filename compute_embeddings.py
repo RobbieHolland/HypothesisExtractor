@@ -6,6 +6,7 @@ from pytorch_lightning import LightningModule, Trainer, Callback
 
 from models.merlin_model import CTDataset, MerlinEmbedder
 from models.qwen3_model import TextDataset, Qwen3Embedder
+from models.labs_model import LabsDataset, LabsEmbedder, labs_collate
 
 
 class EmbeddingExtractor(LightningModule):
@@ -34,8 +35,8 @@ class CollectCallback(Callback):
         self.sample_ids.extend(outputs["sample_ids"])
 
 
-def extract(model, dataset, batch_size, accelerator="auto"):
-    loader = DataLoader(dataset, batch_size=batch_size, shuffle=False, num_workers=0)
+def extract(model, dataset, batch_size, accelerator="auto", collate_fn=None):
+    loader = DataLoader(dataset, batch_size=batch_size, shuffle=False, num_workers=0, collate_fn=collate_fn)
     extractor = EmbeddingExtractor(model)
     collector = CollectCallback()
     trainer = Trainer(
@@ -72,3 +73,13 @@ class EmbeddingComputer:
             result = extract(model, dataset, self.config.batch_size, acc)
             torch.save(result, os.path.join(self.config.paths.out_dir, "report_embeddings.pt"))
             print(f"Saved report embeddings: {result['embeddings'].shape}")
+
+        if self.config.paths.get("labs_csv"):
+            labs_df = pd.read_csv(self.config.paths.labs_csv)
+            labs_metadata = pd.read_pickle(self.config.paths.labs_metadata)
+            loinc_map = pd.read_csv(self.config.paths.loinc_map)
+            model = LabsEmbedder(labs_metadata, checkpoint_path=self.config.paths.get("labs_checkpoint"))
+            dataset = LabsDataset(metadata, labs_df, loinc_map, labs_metadata)
+            result = extract(model, dataset, self.config.batch_size, acc, collate_fn=labs_collate)
+            torch.save(result, os.path.join(self.config.paths.out_dir, "lab_embeddings.pt"))
+            print(f"Saved lab embeddings: {result['embeddings'].shape}")

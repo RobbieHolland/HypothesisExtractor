@@ -4,6 +4,10 @@ paths:
   icd_phecode_map: data/mappings/Phecode_map12_filtered.csv
   phecode_task_map: data/mappings/refined_mapped_phecodes.csv
   out_dir: out/
+  labs_csv: null             # path to labs CSV (patient_id, date, loinc_code, value)
+  labs_metadata: data/mappings/lab_types_analysis.pkl
+  loinc_map: data/mappings/lab_loinc_map.csv
+  labs_checkpoint: data/mappings
 
 huggingface_token: null   # set your HuggingFace token here
 
