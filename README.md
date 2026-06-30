@@ -37,6 +37,8 @@ One row per sample:
 | `sample_id` | Unique string identifier for each sample |
 | `patient_id` | Patient identifier (patients may have multiple samples) |
 | `date` | Acquisition date (any parseable date string) |
+| `age` | Patient age at scan (integer or float) *(optional)* |
+| `sex` | Patient sex (e.g. `M`/`F`) *(optional)* |
 | `ct_path` | Path to the NIfTI CT file for this sample *(optional)* |
 | `report_path` | Path to the radiology report text file for this sample *(optional)* |
 

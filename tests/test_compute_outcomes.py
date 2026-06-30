@@ -26,6 +26,8 @@ def _make_test_data(tmp_path):
         "sample_id": ["S001", "S002"],
         "patient_id": ["P001", "P002"],
         "date": ["2020-01-15", "2020-01-15"],
+        "age": [62, 45],
+        "sex": ["M", "F"],
     })
     diagnoses = pd.DataFrame({
         "patient_id": ["P001", "P001", "P002"],
@@ -89,3 +91,13 @@ def test_output_file_exists(tmp_path):
     cfg = _make_test_data(tmp_path)
     OutcomeComputer(cfg).run()
     assert os.path.exists(os.path.join(cfg.paths.out_dir, "outcomes.pkl"))
+
+
+def test_age_sex_passthrough(tmp_path):
+    cfg = _make_test_data(tmp_path)
+    results = OutcomeComputer(cfg).run()
+    assert "age" in results.columns and "sex" in results.columns
+    assert results.loc["S001", "age"] == 62
+    assert results.loc["S001", "sex"] == "M"
+    assert results.loc["S002", "age"] == 45
+    assert results.loc["S002", "sex"] == "F"

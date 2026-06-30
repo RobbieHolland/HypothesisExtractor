@@ -46,7 +46,8 @@ class OutcomeComputer:
             how="inner",
         )
 
-        results = metadata.set_index("sample_id")[["patient_id", "date"]].copy()
+        extra_cols = [c for c in ["age", "sex"] if c in metadata.columns]
+        results = metadata.set_index("sample_id")[["patient_id", "date"] + extra_cols].copy()
 
         for task in task_map["task"].unique():
             task_diag = diag_mapped[diag_mapped["task"] == task][["patient_id", "date"]].copy()
