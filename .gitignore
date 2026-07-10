@@ -9,3 +9,4 @@ outputs/
 scripts/build_all_phecodes_mapping.py
 data/sample/
 data/sae/
+mayo_out/

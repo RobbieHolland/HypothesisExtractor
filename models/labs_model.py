@@ -117,6 +117,32 @@ class LabsEmbedder(nn.Module):
         return (output * mask_exp).sum(dim=1) / mask_exp.sum(dim=1).clamp(min=1e-6)
 
 
+SENTINEL_VALUE_THRESHOLD = 999999  # |value| >= this is almost certainly a placeholder/error code, not a real result
+
+LAB_COUNT_BUCKETS = [(0, 0), (1, 10), (11, 100), (101, 1000), (1001, float("inf"))]
+
+
+def _print_lab_count_histogram(label, patient_ids, labs_subset):
+    """Distribution of #labs-per-patient over `patient_ids`, using labs_subset (already
+    linked to patients via patient_id, but with no other content filtering applied by the
+    caller — the caller decides what "before" vs "after" filtering means)."""
+    counts = labs_subset.groupby(labs_subset["patient_id"].astype(str)).size()
+    counts = counts.reindex(patient_ids, fill_value=0)
+    print(f"{label} (n={len(patient_ids)} patients):")
+    for lo, hi in LAB_COUNT_BUCKETS:
+        if hi == float("inf"):
+            n = int((counts >= lo).sum())
+            bucket_label = f"{lo}+"
+        elif lo == hi == 0:
+            n = int((counts == 0).sum())
+            bucket_label = "0"
+        else:
+            n = int(((counts >= lo) & (counts <= hi)).sum())
+            bucket_label = f"{lo}-{hi}"
+        pct = 100 * n / len(patient_ids) if len(patient_ids) else 0.0
+        print(f"    {bucket_label:>10s} labs: {n:>4d} patient(s)  ({pct:5.1f}%)")
+
+
 class LabsDataset(Dataset):
     def __init__(self, metadata, labs_df, loinc_map, labs_metadata):
         retained_ids = set(labs_metadata.loc[labs_metadata["retained"], "lab_id"])
@@ -133,6 +159,42 @@ class LabsDataset(Dataset):
 
         labs["date"] = pd.to_datetime(labs["date"])
         labs = labs.dropna(subset=["value"])
+
+        # --- Diagnostic: is labs_df scoped to this cohort, or a bigger population? ---
+        # patient_id dtype mismatches (e.g. int vs str) silently zero out every join below,
+        # which looks identical in the final counts to "no labs for this patient" — check first.
+        meta_pid_dtype, labs_pid_dtype = metadata["patient_id"].dtype, labs["patient_id"].dtype
+        if meta_pid_dtype != labs_pid_dtype:
+            print(f"WARNING: patient_id dtype mismatch — metadata={meta_pid_dtype}, labs_df={labs_pid_dtype}. "
+                  f"This can silently zero out every patient match below; comparing as strings.")
+        meta_pids = set(metadata["patient_id"].astype(str))
+        labs_pids_all = set(labs["patient_id"].astype(str))
+        n_meta_pids_in_labs = len(meta_pids & labs_pids_all)
+        print(f"Cohort coverage: labs_df has {len(labs_pids_all)} unique patient_id(s) total "
+              f"({len(labs)} rows); {n_meta_pids_in_labs}/{len(meta_pids)} metadata patient_id(s) "
+              f"appear anywhere in labs_df.")
+        if len(labs_pids_all) > len(meta_pids) * 2:
+            print(f"NOTE: labs_df has {len(labs_pids_all)} patients but metadata only has {len(meta_pids)} — "
+                  f"labs_df looks like it was NOT pre-filtered to this cohort; row/patient counts below "
+                  f"(e.g. 'Lab rows: X/Y') are population-wide, not per-case.")
+
+        # Distribution BEFORE any content filtering — just linked to our cohort's patient_ids.
+        _print_lab_count_histogram(
+            "Raw labs per patient (linked to cohort, no LOINC/model filtering yet)",
+            meta_pids, labs[labs["patient_id"].astype(str).isin(meta_pids)],
+        )
+
+        # --- Diagnostic: implausible sentinel values (e.g. 9999999) that aren't real results ---
+        numeric_vals = pd.to_numeric(labs["value"], errors="coerce")
+        sentinel_mask = numeric_vals.abs() >= SENTINEL_VALUE_THRESHOLD
+        n_sentinel = int(sentinel_mask.sum())
+        if n_sentinel:
+            sentinel_by_code = labs.loc[sentinel_mask, "loinc_code"].value_counts()
+            print(f"WARNING: dropping {n_sentinel} row(s) with |value| >= {SENTINEL_VALUE_THRESHOLD} "
+                  f"(likely placeholder/error codes, not real results):")
+            for code, n in sentinel_by_code.items():
+                print(f"  {code}  ({n} rows)")
+            labs = labs[~sentinel_mask]
 
         n_total_rows = len(labs)
         input_codes = set(labs["loinc_code"].dropna())
@@ -158,6 +220,13 @@ class LabsDataset(Dataset):
             for code in sorted(unmatched_codes):
                 print(f"  {code}  ({rows_per_code.get(code, 0)} rows)")
 
+        # Distribution AFTER LOINC/model filtering — same buckets, same patients, so you can see
+        # directly how much each patient's count shrank once only recognized/retained labs count.
+        _print_lab_count_histogram(
+            "Labs per patient AFTER LOINC/model filtering (before the 6-month window)",
+            meta_pids, labs[labs["patient_id"].astype(str).isin(meta_pids)],
+        )
+
         # Warn about likely unit mismatches: labs where >50% of values are >5σ from training mean
         meta_idx = labs_metadata.set_index("lab_id")
         flagged = []
@@ -175,16 +244,27 @@ class LabsDataset(Dataset):
                 print(f"  {name} (lab_id={lid}): {frac*100:.0f}% outliers  [training mean={mean:.3g}, std={std:.3g}]")
 
         self.samples = []
+        # Track *why* each sample did or didn't get labs, instead of a single pass/fail count.
+        reason_no_labs_ever = []      # patient has zero retained lab rows anywhere in labs_df
+        reason_outside_window = []    # patient has retained labs, but none in the 6mo pre-scan window
+        nearest_lab_days_outside = [] # for reason_outside_window: distance (days) to nearest retained lab
+
         for _, row in metadata.iterrows():
             scan_date = pd.to_datetime(row["date"])
             window_start = scan_date - pd.DateOffset(months=6)
 
-            patient_labs = labs[labs["patient_id"] == row["patient_id"]].copy()
-            patient_labs = patient_labs[
-                (patient_labs["date"] <= scan_date) & (patient_labs["date"] >= window_start)
-            ]
+            all_patient_labs = labs[labs["patient_id"] == row["patient_id"]]
+            patient_labs = all_patient_labs[
+                (all_patient_labs["date"] <= scan_date) & (all_patient_labs["date"] >= window_start)
+            ].copy()
 
             if len(patient_labs) == 0:
+                if len(all_patient_labs) == 0:
+                    reason_no_labs_ever.append(row["sample_id"])
+                else:
+                    reason_outside_window.append(row["sample_id"])
+                    nearest_gap_days = (all_patient_labs["date"] - scan_date).abs().dt.days.min()
+                    nearest_lab_days_outside.append(int(nearest_gap_days))
                 continue
 
             # Quarterly downsample: last lab per (lab_id, quarter)
@@ -209,6 +289,14 @@ class LabsDataset(Dataset):
         n_with_labs = len(self.samples)
         avg_labs = np.mean([len(s[0]) for s in self.samples]) if self.samples else 0
         print(f"Samples with labs in 6-month window: {n_with_labs}/{n_total} (avg {avg_labs:.1f} labs per sample)")
+        print(f"  -> {len(reason_no_labs_ever)}/{n_total} sample(s): patient has ZERO retained/matched "
+              f"labs anywhere in labs_df (no data at all, not a window issue)")
+        if reason_outside_window:
+            days = np.array(nearest_lab_days_outside)
+            print(f"  -> {len(reason_outside_window)}/{n_total} sample(s): patient has retained labs, but "
+                  f"none within 6 months of the scan. Nearest lab is min={days.min()}d "
+                  f"median={int(np.median(days))}d max={days.max()}d away — "
+                  f"if these are clustered close to 180d, widening the window would recover them.")
 
     def __len__(self):
         return len(self.samples)
