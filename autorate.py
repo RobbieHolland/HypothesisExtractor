@@ -16,6 +16,7 @@ import random
 import numpy as np
 import pandas as pd
 from utilities.vertex_ai import VertexAIClient
+from utilities.ollama_client import OllamaClient
 
 INTERP_CSV = "data/autointerp_interpretations.csv"
 
@@ -146,6 +147,23 @@ def _parse_predictions(response_text):
     return [int(m) for m in re.findall(r"\d+\.\s*([01])", text)]
 
 
+def _build_llm_client(config):
+    backend = config.get("llm", "ollama")
+    if backend == "vertex":
+        return VertexAIClient(
+            project=config.paths.vertex_project,
+            location=config.paths.get("vertex_location", "us-central1"),
+            model=config.paths.get("vertex_model", "gemini-2.5-pro"),
+        )
+    if backend == "ollama":
+        return OllamaClient(
+            model=config.get("ollama_model", "gemma4:31b"),
+            host=config.get("ollama_host"),
+            auto_start=config.get("ollama_auto_start", True),
+        )
+    raise ValueError(f"Unknown llm backend {backend!r} (expected 'vertex' or 'ollama')")
+
+
 def run_autorate(config):
     out_dir = config.paths.out_dir
     os.makedirs(out_dir, exist_ok=True)
@@ -153,11 +171,14 @@ def run_autorate(config):
     interpretations = pd.read_csv(INTERP_CSV)
     metadata = pd.read_csv(config.paths.metadata_csv)
 
-    vertex = VertexAIClient(
-        project=config.paths.vertex_project,
-        location=config.paths.get("vertex_location", "us-central1"),
-        model=config.paths.get("vertex_model", "gemini-2.5-pro"),
-    )
+    llm_client = _build_llm_client(config)
+    print(f"AutoRate LLM backend: {llm_client.name} "
+          f"(host={getattr(llm_client, 'host', 'n/a')}, "
+          f"auto_start={getattr(llm_client, 'auto_start', 'n/a')})")
+    try:
+        llm_client.ensure_ready()
+    except Exception as e:
+        raise SystemExit(f"AutoRate cannot start ({llm_client.name}): {e}") from None
 
     labs_df, loinc_map, labs_metadata = None, None, None
     if config.paths.get("labs_csv"):
@@ -177,20 +198,22 @@ def run_autorate(config):
 
     results = []
     top_sample_rows = []
-    for _, interp_row in interpretations.iterrows():
+    n_interp = len(interpretations)
+    for i, (_, interp_row) in enumerate(interpretations.iterrows(), start=1):
         modality = interp_row["inputs"]
         feature_name = interp_row["feature_name"]
         interpretation = interp_row["extracted_interpretation"]
+        progress = f"[{i}/{n_interp}]"
         if not isinstance(interpretation, str) or not interpretation.strip():
             continue
 
         acts_path = os.path.join(out_dir, f"concept_activations_{modality}.csv")
         if not os.path.exists(acts_path):
-            print(f"Skipping {modality}/{feature_name}: no activations at {acts_path}")
+            print(f"{progress} Skipping {modality}/{feature_name}: no activations at {acts_path}")
             continue
 
         if not existing.empty and ((existing["inputs"] == modality) & (existing["feature_name"] == feature_name) & (existing["top_k"] == interp_row.get("top_k")) & (existing["matryoshka"] == interp_row.get("matryoshka"))).any():
-            print(f"Skipping {modality}/{feature_name}: already rated")
+            print(f"{progress} Skipping {modality}/{feature_name}: already rated")
             continue
 
         acts_df = pd.read_csv(acts_path, usecols=["sample_id", feature_name], dtype={feature_name: float})
@@ -198,7 +221,7 @@ def run_autorate(config):
 
         active = concept_acts[concept_acts > 0]
         if len(active) < 4:
-            print(f"Skipping {modality}/{feature_name}: only {len(active)} active samples")
+            print(f"{progress} Skipping {modality}/{feature_name}: only {len(active)} active samples")
             continue
 
         threshold = active.quantile(ACTIVATION_QUANTILE)
@@ -227,9 +250,9 @@ def run_autorate(config):
             n=len(combined),
         )
 
-        print(f"AutoRating {modality}/{feature_name} ({n} high + {n} low)...")
+        print(f"{progress} AutoRating {modality}/{feature_name} ({n} high + {n} low)...")
         try:
-            response = vertex.query(prompt, temperature=0.0)
+            response = llm_client.query(prompt, temperature=0.0)
             predicted = np.array(_parse_predictions(response))
             if len(predicted) == len(groundtruth):
                 acc = float(np.mean(predicted == groundtruth))

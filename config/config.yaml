@@ -15,6 +15,12 @@ paths:
 
 steps: [embeddings, outcomes, sae, autorate]  # override e.g. steps=[embeddings]
 
+llm: ollama               # AutoRate LLM backend: "ollama" (local, default) or "vertex"
+ollama_model: gemma4:31b
+ollama_host: http://localhost:11434
+ollama_auto_start: true  # auto-start `ollama serve` + `ollama pull` on first use if not already running
+                          # (requires the `ollama` binary itself to already be installed: https://ollama.com/download)
+
 huggingface_token: null   # set your HuggingFace token here
 
 batch_size: 8

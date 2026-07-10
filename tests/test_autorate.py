@@ -2,6 +2,7 @@ import os
 import re
 import torch
 import pytest
+import requests
 import numpy as np
 import pandas as pd
 from unittest.mock import patch, MagicMock
@@ -111,6 +112,134 @@ def test_format_labs_empty():
     assert _format_labs([], _make_labs_metadata()) == "(no labs)"
 
 
+def test_autorate_fails_fast_when_ollama_unavailable(tmp_path):
+    # If Ollama isn't installed/reachable, run_autorate should stop immediately with one
+    # clear error (SystemExit), not silently swallow it once per concept in the main loop.
+    sample_ids = [f"S{i:03d}" for i in range(1, 9)]
+    metadata, meta_path = _make_metadata_n(tmp_path, sample_ids)
+    interp_path = _make_interpretations(tmp_path)
+    out_dir = tmp_path / "out"
+    out_dir.mkdir()
+    _make_activations(out_dir, sample_ids, "Concept_0", n_concepts=8, n_active=4)
+
+    cfg = OmegaConf.create({
+        "llm": "ollama",
+        "ollama_model": "gemma4:31b",
+        "paths": {
+            "metadata_csv": str(meta_path),
+            "out_dir": str(out_dir),
+            "labs_csv": None,
+        },
+    })
+
+    with patch("autorate.INTERP_CSV", str(interp_path)), \
+         patch("utilities.ollama_client.requests.get", side_effect=requests.exceptions.ConnectionError()), \
+         patch("utilities.ollama_client.shutil.which", return_value=None), \
+         patch("utilities.ollama_client.requests.post") as mock_post:
+        from autorate import run_autorate
+        with pytest.raises(SystemExit, match="not installed"):
+            run_autorate(cfg)
+
+        mock_post.assert_not_called()  # never got as far as querying the LLM
+
+    assert not (out_dir / "autointerp_results.csv").exists()
+
+
+def test_build_llm_client_defaults_to_ollama():
+    from autorate import _build_llm_client
+    from utilities.ollama_client import OllamaClient
+
+    cfg = OmegaConf.create({"paths": {}})
+    client = _build_llm_client(cfg)
+    assert isinstance(client, OllamaClient)
+    assert client.model == "gemma4:31b"
+
+
+def test_build_llm_client_ollama_explicit_model_and_host():
+    from autorate import _build_llm_client
+
+    cfg = OmegaConf.create({
+        "llm": "ollama",
+        "ollama_model": "gemma4:12b",
+        "ollama_host": "http://gpu-node:11434",
+        "paths": {},
+    })
+    client = _build_llm_client(cfg)
+    assert client.model == "gemma4:12b"
+    assert client.host == "http://gpu-node:11434"
+
+
+def test_build_llm_client_vertex():
+    from autorate import _build_llm_client
+    from utilities.vertex_ai import VertexAIClient
+
+    cfg = OmegaConf.create({
+        "llm": "vertex",
+        "paths": {
+            "vertex_project": "some-project",
+            "vertex_location": "us-central1",
+            "vertex_model": "gemini-2.5-pro",
+        },
+    })
+    with patch("autorate.VertexAIClient") as MockVertex:
+        MockVertex.return_value = MagicMock(name="vertex-client")
+        client = _build_llm_client(cfg)
+        MockVertex.assert_called_once_with(project="some-project", location="us-central1", model="gemini-2.5-pro")
+
+
+def test_build_llm_client_unknown_backend():
+    from autorate import _build_llm_client
+
+    cfg = OmegaConf.create({"llm": "not-a-real-backend", "paths": {}})
+    with pytest.raises(ValueError):
+        _build_llm_client(cfg)
+
+
+def test_autorate_uses_ollama_backend(tmp_path):
+    sample_ids = [f"S{i:03d}" for i in range(1, 9)]
+    metadata, meta_path = _make_metadata_n(tmp_path, sample_ids)
+    interp_path = _make_interpretations(tmp_path)
+    out_dir = tmp_path / "out"
+    out_dir.mkdir()
+    _make_activations(out_dir, sample_ids, "Concept_0", n_concepts=8, n_active=4)
+
+    for sid in sample_ids:
+        rp = tmp_path / f"{sid}.txt"
+        rp.write_text(f"CT findings for {sid}.")
+        metadata.loc[metadata["sample_id"] == sid, "report_path"] = str(rp)
+    meta_path.unlink()
+    metadata.to_csv(meta_path, index=False)
+
+    cfg = OmegaConf.create({
+        "llm": "ollama",
+        "ollama_model": "gemma4:31b",
+        "ollama_auto_start": False,  # server bootstrap logic is tested separately in test_ollama_client.py
+        "paths": {
+            "metadata_csv": str(meta_path),
+            "out_dir": str(out_dir),
+            "labs_csv": None,
+        },
+    })
+
+    fake_response = "* PREDICTIONS:\n1. 1\n2. 0"
+    with patch("autorate.INTERP_CSV", str(interp_path)), \
+         patch("autorate.N_TEST", 1), \
+         patch("autorate.ACTIVATION_QUANTILE", 0.0), \
+         patch("utilities.ollama_client.requests.post") as mock_post:
+        mock_post.return_value = MagicMock(json=lambda: {"response": fake_response})
+        mock_post.return_value.raise_for_status = lambda: None
+
+        from autorate import run_autorate
+        run_autorate(cfg)
+
+        assert mock_post.called
+        called_model = mock_post.call_args.kwargs["json"]["model"]
+        assert called_model == "gemma4:31b"
+
+    result = pd.read_csv(out_dir / "autointerp_results.csv")
+    assert len(result) == 1
+
+
 def test_autorate_end_to_end(tmp_path):
     sample_ids = [f"S{i:03d}" for i in range(1, 11)]
     metadata, meta_path = _make_metadata_n(tmp_path, sample_ids)
@@ -140,6 +269,7 @@ def test_autorate_end_to_end(tmp_path):
     metadata.to_csv(meta_path, index=False)
 
     cfg = OmegaConf.create({
+        "llm": "vertex",
         "paths": {
             "metadata_csv": str(meta_path),
             "out_dir": str(out_dir),
