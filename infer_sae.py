@@ -5,6 +5,7 @@ Outputs one CSV per modality: out/concept_activations_{modality}.csv
 """
 import os
 import torch
+import yaml
 import pandas as pd
 from models.sae_model import apply_sae
 
@@ -14,10 +15,15 @@ MODALITY_EMBEDDING_FILE = {
     "labs": "lab_embeddings.pt",
 }
 
+NORM_STATS_FILE = "sae_input_normalization.yaml"
+
 
 def run_infer_sae(config):
     out_dir = config.paths.out_dir
     cache_dir = config.paths.get("sae_cache_dir", "data/mappings")
+
+    with open(os.path.join(cache_dir, NORM_STATS_FILE)) as f:
+        norm_stats = yaml.safe_load(f)
 
     for modality, emb_file in MODALITY_EMBEDDING_FILE.items():
         emb_path = os.path.join(out_dir, emb_file)
@@ -27,6 +33,10 @@ def run_infer_sae(config):
         data = torch.load(emb_path, map_location="cpu", weights_only=True)
         embeddings = data["embeddings"]
         sample_ids = data["sample_ids"]
+
+        s = norm_stats[modality]
+        mean = torch.tensor(s["mean"], dtype=torch.float32)
+        embeddings = ((embeddings.float() - mean) / s["std"]) * s["dim_scale"]
 
         print(f"Applying SAE to {modality} embeddings {tuple(embeddings.shape)}...")
         acts = apply_sae(embeddings, modality, cache_dir=cache_dir)

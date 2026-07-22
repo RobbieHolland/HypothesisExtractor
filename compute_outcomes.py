@@ -10,7 +10,7 @@ class OutcomeComputer:
     def run(self):
         os.makedirs(self.config.paths.out_dir, exist_ok=True)
 
-        metadata = pd.read_csv(self.config.paths.metadata_csv)
+        metadata = pd.read_csv(self.config.paths.metadata_csv, dtype={"date": str}).drop_duplicates(subset="sample_id", keep="first")
         diagnoses = pd.read_csv(self.config.paths.diagnoses_csv)
         icd_map = pd.read_csv(self.config.paths.icd_phecode_map)
         task_map = pd.read_csv(self.config.paths.phecode_task_map)
@@ -46,7 +46,7 @@ class OutcomeComputer:
             how="inner",
         )
 
-        extra_cols = [c for c in ["age", "sex"] if c in metadata.columns]
+        extra_cols = [c for c in ["patient_sex", "patient_age", "recent_bmi"] if c in metadata.columns]
         results = metadata.set_index("sample_id")[["patient_id", "date"] + extra_cols].copy()
 
         for task in task_map["task"].unique():

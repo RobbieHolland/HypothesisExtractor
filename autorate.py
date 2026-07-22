@@ -169,7 +169,7 @@ def run_autorate(config):
     os.makedirs(out_dir, exist_ok=True)
 
     interpretations = pd.read_csv(INTERP_CSV)
-    metadata = pd.read_csv(config.paths.metadata_csv)
+    metadata = pd.read_csv(config.paths.metadata_csv, dtype={"date": str})
 
     llm_client = _build_llm_client(config)
     print(f"AutoRate LLM backend: {llm_client.name} "
@@ -182,7 +182,7 @@ def run_autorate(config):
 
     labs_df, loinc_map, labs_metadata = None, None, None
     if config.paths.get("labs_csv"):
-        labs_df = pd.read_csv(config.paths.labs_csv)
+        labs_df = pd.read_csv(config.paths.labs_csv, dtype={"date": str, "start": str})
         labs_df["date"] = pd.to_datetime(labs_df["date"])
         if "loinc_code" not in labs_df.columns and "code" in labs_df.columns:
             labs_df = labs_df.rename(columns={"code": "loinc_code"})

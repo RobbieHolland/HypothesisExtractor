@@ -26,8 +26,9 @@ def _make_test_data(tmp_path):
         "sample_id": ["S001", "S002"],
         "patient_id": ["P001", "P002"],
         "date": ["2020-01-15", "2020-01-15"],
-        "age": [62, 45],
-        "sex": ["M", "F"],
+        "patient_age": [62, 45],
+        "patient_sex": [1, 0],
+        "recent_bmi": [28.5, 22.1],
     })
     diagnoses = pd.DataFrame({
         "patient_id": ["P001", "P001", "P002"],
@@ -96,8 +97,9 @@ def test_output_file_exists(tmp_path):
 def test_age_sex_passthrough(tmp_path):
     cfg = _make_test_data(tmp_path)
     results = OutcomeComputer(cfg).run()
-    assert "age" in results.columns and "sex" in results.columns
-    assert results.loc["S001", "age"] == 62
-    assert results.loc["S001", "sex"] == "M"
-    assert results.loc["S002", "age"] == 45
-    assert results.loc["S002", "sex"] == "F"
+    assert {"patient_age", "patient_sex", "recent_bmi"} <= set(results.columns)
+    assert results.loc["S001", "patient_age"] == 62
+    assert results.loc["S001", "patient_sex"] == 1
+    assert results.loc["S001", "recent_bmi"] == 28.5
+    assert results.loc["S002", "patient_age"] == 45
+    assert results.loc["S002", "patient_sex"] == 0

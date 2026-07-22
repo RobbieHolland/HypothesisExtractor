@@ -9,4 +9,5 @@ outputs/
 scripts/build_all_phecodes_mapping.py
 data/sample/
 data/sae/
+data/mappings/sae_*.ckpt
 mayo_out/

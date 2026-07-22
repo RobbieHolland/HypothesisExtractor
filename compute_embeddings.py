@@ -57,7 +57,7 @@ class EmbeddingComputer:
 
     def run(self):
         os.makedirs(self.config.paths.out_dir, exist_ok=True)
-        metadata = pd.read_csv(self.config.paths.metadata_csv)
+        metadata = pd.read_csv(self.config.paths.metadata_csv, dtype={"date": str}).drop_duplicates(subset="sample_id", keep="first")
         acc = self.config.trainer.accelerator
 
         if "ct_path" in metadata.columns:
@@ -75,7 +75,7 @@ class EmbeddingComputer:
             print(f"Saved report embeddings: {result['embeddings'].shape}")
 
         if self.config.paths.get("labs_csv"):
-            labs_df = pd.read_csv(self.config.paths.labs_csv)
+            labs_df = pd.read_csv(self.config.paths.labs_csv, dtype={"date": str, "start": str})
             labs_metadata = pd.read_pickle(self.config.paths.labs_metadata)
             loinc_map = pd.read_csv(self.config.paths.loinc_map)
             model = LabsEmbedder(labs_metadata, checkpoint_path=self.config.paths.get("labs_checkpoint"))

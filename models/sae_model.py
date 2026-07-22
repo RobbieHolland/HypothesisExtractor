@@ -30,10 +30,11 @@ def apply_sae(embeddings, modality, cache_dir="data/sae"):
     weights = _load_sae_weights(modality, cache_dir)
     W_enc = weights["W_enc"].float()   # [D, 8192]
     b_enc = weights["b_enc"].float()   # [8192]
-    b_dec = weights["b_dec"].float()   # [D]
 
     x = embeddings.float()
-    acts = F.relu((x - b_dec) @ W_enc + b_enc)   # [N, 8192]
+    # b_dec is decoder-only in training (SparseAutoencoder.forward_topk_sae encodes
+    # z = x @ W_enc + b_enc), so the encoder must not subtract it.
+    acts = F.relu(x @ W_enc + b_enc)   # [N, 8192]
 
     # TopK sparsification
     topk_vals, topk_idx = acts.topk(TOP_K, dim=-1)
