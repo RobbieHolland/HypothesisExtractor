@@ -46,7 +46,7 @@ class OutcomeComputer:
             how="inner",
         )
 
-        extra_cols = [c for c in ["patient_sex", "patient_age", "recent_bmi"] if c in metadata.columns]
+        extra_cols = [c for c in ["patient_sex", "patient_age", "recent_bmi", "race", "ethnicity", "smoking_status", "alcohol_use"] if c in metadata.columns]
         results = metadata.set_index("sample_id")[["patient_id", "date"] + extra_cols].copy()
 
         for task in task_map["task"].unique():
