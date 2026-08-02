@@ -28,6 +28,28 @@ class OutcomeComputer:
         metadata = metadata.copy()
         metadata["date"] = pd.to_datetime(metadata["date"])
 
+        # patient_id dtype mismatches (e.g. int vs str) silently zero out the joins below,
+        # producing all-NaN outcome times rather than an error.
+        meta_pid_dtype, diag_pid_dtype = metadata["patient_id"].dtype, diagnoses["patient_id"].dtype
+        if meta_pid_dtype != diag_pid_dtype:
+            print(f"WARNING: patient_id dtype mismatch — metadata={meta_pid_dtype}, diagnoses={diag_pid_dtype}. "
+                  f"Casting both to str to avoid a silently empty join.")
+            metadata["patient_id"] = metadata["patient_id"].astype(str)
+            diagnoses["patient_id"] = diagnoses["patient_id"].astype(str)
+
+        meta_pids = set(metadata["patient_id"])
+        diag_pids = set(diagnoses["patient_id"])
+        n_matched = len(meta_pids & diag_pids)
+        print(f"Cohort coverage: diagnoses has {len(diag_pids)} unique patient_id(s) ({len(diagnoses)} rows); "
+              f"{n_matched}/{len(meta_pids)} metadata patient_id(s) appear in diagnoses.")
+        if n_matched == 0:
+            print("  WARNING: NO metadata patient_id matches any diagnoses patient_id — every outcome will be NaN. "
+                  "Check that the two files use the same patient identifier.")
+        elif n_matched < 0.5 * len(meta_pids):
+            missing = sorted(meta_pids - diag_pids)[:3]
+            print(f"  WARNING: {len(meta_pids) - n_matched}/{len(meta_pids)} metadata patient_id(s) have NO diagnoses "
+                  f"at all; their outcome times will be NaN. Examples: {missing}")
+
         # Last ICD code date per patient, computed before any task filtering (for censoring)
         last_date = diagnoses.groupby("patient_id")["date"].max()
 
@@ -39,12 +61,21 @@ class OutcomeComputer:
         icd10_mapped = diagnoses["icd10"].map(icd10_map)
         diagnoses.loc[icd10_mapped.notna(), "phecode"] = icd10_mapped[icd10_mapped.notna()]
 
+        n_phecoded = int(diagnoses["phecode"].notna().sum())
+        print(f"Diagnosis rows: {n_phecoded}/{len(diagnoses)} mapped to a phecode "
+              f"({n_phecoded / max(len(diagnoses), 1):.1%})")
+        if n_phecoded == 0:
+            print("  WARNING: no ICD code mapped to a phecode — check the icd9/icd10 column formatting "
+                  "(e.g. codes with dots vs without).")
+
         # Map phecode → task
         diag_mapped = diagnoses.merge(
             task_map[["phecodes", "task"]].rename(columns={"phecodes": "phecode"}),
             on="phecode",
             how="inner",
         )
+        print(f"  {len(diag_mapped)} row(s) map to a modelled task, covering "
+              f"{diag_mapped['patient_id'].nunique()} patient(s) and {diag_mapped['task'].nunique()} task(s)")
 
         extra_cols = [c for c in ["patient_sex", "patient_age", "recent_bmi", "race", "ethnicity", "smoking_status", "alcohol_use"] if c in metadata.columns]
         results = metadata.set_index("sample_id")[["patient_id", "date"] + extra_cols].copy()
@@ -76,6 +107,11 @@ class OutcomeComputer:
             # Gaussian jitter (σ=3 days) for anonymization
             jitter = np.random.normal(0, 3, len(results))
             results[f"{task}_time"] += jitter
+
+        time_cols = [c for c in results.columns if c.endswith("_time")]
+        n_nan = int(results[time_cols[0]].isna().sum())
+        print(f"Outcomes: {len(results) - n_nan}/{len(results)} sample(s) have a usable follow-up time; "
+              f"{n_nan} ({n_nan / len(results):.1%}) are NaN because the patient has no diagnoses records.")
 
         # Drop internal columns
         return results.drop(columns=["patient_id", "date"])
