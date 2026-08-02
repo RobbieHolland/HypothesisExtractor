@@ -4,6 +4,7 @@ Outputs one CSV per modality: out/concept_activations_{modality}.csv
   columns: sample_id, Concept_0, Concept_1, ..., Concept_8191
 """
 import os
+import math
 import torch
 import yaml
 import pandas as pd
@@ -37,7 +38,21 @@ def run_infer_sae(config):
 
         s = norm_stats[modality]
         mean = torch.tensor(s["mean"], dtype=torch.float32)
+        raw_norm = embeddings.float().norm(dim=1).mean().item()
         embeddings = ((embeddings.float() - mean) / s["std"]) * s["dim_scale"]
+
+        # After normalization every modality should sit at ~sqrt(2048) regardless of its
+        # dimensionality; a large deviation means these embeddings are off-distribution
+        # relative to the data the SAE was trained on.
+        target = math.sqrt(2048)
+        norm_after = embeddings.norm(dim=1).mean().item()
+        print(f"Normalized {modality} with Stanford train stats "
+              f"(std={s['std']:.4g}, dim_scale={s['dim_scale']:.4g}): "
+              f"mean row-norm {raw_norm:.1f} -> {norm_after:.1f} (expected ~{target:.1f}, "
+              f"{norm_after / target - 1:+.0%})")
+        if abs(norm_after / target - 1) > 0.35:
+            print(f"  WARNING: {modality} embeddings are far from the SAE's training distribution — "
+                  f"concept activations may be unreliable.")
 
         print(f"Applying SAE to {modality} embeddings {tuple(embeddings.shape)}...")
         acts = apply_sae(embeddings, modality, cache_dir=cache_dir)
@@ -47,8 +62,11 @@ def run_infer_sae(config):
 
         out_path = os.path.join(out_dir, f"concept_activations_{modality}.csv")
         df.to_csv(out_path, index=False)
-        n_alive = (acts > 0).any(dim=0).sum().item()
-        print(f"Saved {modality} concept activations: {df.shape}  ({n_alive} alive concepts)  → {out_path}")
+        per_concept = (acts > 0).sum(dim=0)
+        n_alive = int((per_concept > 0).sum())
+        n_common = int((per_concept >= 25).sum())
+        print(f"Saved {modality} concept activations: {df.shape}  "
+              f"({n_alive} alive concepts, {n_common} firing in >=25 samples)  → {out_path}")
 
 
 if __name__ == "__main__":
