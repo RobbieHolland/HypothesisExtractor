@@ -64,15 +64,15 @@ def test_infer_sae_produces_csv(tmp_path):
         }
     })
 
-    sae_dir = tmp_path / "sae"
-    sae_dir.mkdir()
     import yaml
-    with open(sae_dir / "sae_input_normalization.yaml", "w") as f:
+    norm_path = tmp_path / "sae_input_normalization.yaml"
+    with open(norm_path, "w") as f:
         yaml.safe_dump({"findings": {"dim": emb_dim, "std": 1.0, "dim_scale": 1.0, "mean": [0.0] * emb_dim}}, f)
 
     dummy_weights = _make_dummy_weights(emb_dim, n_concepts)
 
     with patch("models.sae_model._load_sae_weights", return_value=dummy_weights), \
+         patch("infer_sae.NORM_STATS_PATH", str(norm_path)), \
          patch("models.sae_model.TOP_K", 4):
         from infer_sae import run_infer_sae
         run_infer_sae(cfg)

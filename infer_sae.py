@@ -15,14 +15,15 @@ MODALITY_EMBEDDING_FILE = {
     "labs": "lab_embeddings.pt",
 }
 
-NORM_STATS_FILE = "sae_input_normalization.yaml"
+# Tracked repo asset (Stanford train-split statistics), not part of the downloaded weight cache.
+NORM_STATS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "mappings", "sae_input_normalization.yaml")
 
 
 def run_infer_sae(config):
     out_dir = config.paths.out_dir
     cache_dir = config.paths.get("sae_cache_dir", "data/mappings")
 
-    with open(os.path.join(cache_dir, NORM_STATS_FILE)) as f:
+    with open(NORM_STATS_PATH) as f:
         norm_stats = yaml.safe_load(f)
 
     for modality, emb_file in MODALITY_EMBEDDING_FILE.items():
