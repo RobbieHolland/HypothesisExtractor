@@ -17,6 +17,7 @@ import numpy as np
 import pandas as pd
 from utilities.vertex_ai import VertexAIClient
 from utilities.ollama_client import OllamaClient
+from utilities.metadata_util import load_metadata
 
 INTERP_CSV = "data/autointerp_interpretations.csv"
 
@@ -169,7 +170,7 @@ def run_autorate(config):
     os.makedirs(out_dir, exist_ok=True)
 
     interpretations = pd.read_csv(INTERP_CSV)
-    metadata = pd.read_csv(config.paths.metadata_csv, dtype={"date": str})
+    metadata = load_metadata(config.paths.metadata_csv)
 
     llm_client = _build_llm_client(config)
     print(f"AutoRate LLM backend: {llm_client.name} "

@@ -2,6 +2,8 @@ import os
 import numpy as np
 import pandas as pd
 
+from utilities.metadata_util import load_metadata
+
 
 class OutcomeComputer:
     def __init__(self, config):
@@ -10,7 +12,7 @@ class OutcomeComputer:
     def run(self):
         os.makedirs(self.config.paths.out_dir, exist_ok=True)
 
-        metadata = pd.read_csv(self.config.paths.metadata_csv, dtype={"date": str}).drop_duplicates(subset="sample_id", keep="first")
+        metadata = load_metadata(self.config.paths.metadata_csv)
         diagnoses = pd.read_csv(self.config.paths.diagnoses_csv)
         icd_map = pd.read_csv(self.config.paths.icd_phecode_map)
         task_map = pd.read_csv(self.config.paths.phecode_task_map)
@@ -78,7 +80,15 @@ class OutcomeComputer:
               f"{diag_mapped['patient_id'].nunique()} patient(s) and {diag_mapped['task'].nunique()} task(s)")
 
         extra_cols = [c for c in ["patient_sex", "patient_age", "recent_bmi", "race", "ethnicity", "smoking_status", "alcohol_use"] if c in metadata.columns]
+        rename_map = {}
+        for canonical, fallback in {"patient_sex": "sex", "patient_age": "age"}.items():
+            if canonical not in extra_cols and fallback in metadata.columns:
+                extra_cols.append(fallback)
+                rename_map[fallback] = canonical
+
         results = metadata.set_index("sample_id")[["patient_id", "date"] + extra_cols].copy()
+        if rename_map:
+            results.rename(columns=rename_map, inplace=True)
 
         for task in task_map["task"].unique():
             task_diag = diag_mapped[diag_mapped["task"] == task][["patient_id", "date"]].copy()
