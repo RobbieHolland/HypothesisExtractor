@@ -35,6 +35,24 @@ class OllamaClient:
         self.host = (host or DEFAULT_HOST).rstrip("/")
         self.auto_start = auto_start
         self._ready = False
+        self._n_calls = 0
+
+    def _log_gpu_usage(self):
+        try:
+            resp = requests.get(f"{self.host}/api/ps", timeout=5)
+            resp.raise_for_status()
+            models = resp.json().get("models", [])
+            m = next((m for m in models if m.get("name") == self.model), None)
+            if m is None:
+                print(f"[ollama] GPU check: '{self.model}' not listed as loaded by /api/ps")
+                return
+            size = m.get("size", 0)
+            size_vram = m.get("size_vram", 0)
+            pct = 100 * size_vram / size if size else 0
+            print(f"[ollama] GPU check: {self.model} using {size_vram / 1e9:.1f}GB/{size / 1e9:.1f}GB "
+                  f"on GPU ({pct:.0f}%)")
+        except requests.exceptions.RequestException as e:
+            print(f"[ollama] GPU check failed: {e}")
 
     def _get_tags(self):
         """Returns the list of locally-available models, or None if the server isn't reachable."""
@@ -106,9 +124,12 @@ class OllamaClient:
                     "num_predict": max_tokens,
                 },
             },
-            timeout=600,
+            timeout=1800,
         )
         response.raise_for_status()
         print(f"[ollama] query took {time.monotonic() - t0:.1f}s "
               f"({len(prompt)} prompt chars).")
+        self._n_calls += 1
+        if self._n_calls == 1 or self._n_calls % 50 == 0:
+            self._log_gpu_usage()
         return response.json()["response"]

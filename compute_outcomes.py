@@ -81,7 +81,7 @@ class OutcomeComputer:
 
         extra_cols = [c for c in ["patient_sex", "patient_age", "recent_bmi", "race", "ethnicity", "smoking_status", "alcohol_use"] if c in metadata.columns]
         rename_map = {}
-        for canonical, fallback in {"patient_sex": "sex", "patient_age": "age"}.items():
+        for canonical, fallback in {"patient_sex": "sex", "patient_age": "age", "recent_bmi": "bmi"}.items():
             if canonical not in extra_cols and fallback in metadata.columns:
                 extra_cols.append(fallback)
                 rename_map[fallback] = canonical
