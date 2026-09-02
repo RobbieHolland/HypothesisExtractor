@@ -286,6 +286,7 @@ def run_autorate(config):
             "extracted_interpretation": interpretation,
             "mayo_n_tested": len(combined),
             "mayo_interpretation_discrimination_accuracy": acc,
+            "mayo_raw_response": response,
         })
 
         all_results = pd.concat([existing, pd.DataFrame(results)], ignore_index=True)

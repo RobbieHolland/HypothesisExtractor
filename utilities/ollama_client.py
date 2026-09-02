@@ -109,7 +109,7 @@ class OllamaClient:
 
         self._ready = True
 
-    def query(self, prompt, temperature=0.0, max_tokens=8192):
+    def query(self, prompt, temperature=0.0, max_tokens=16384):
         self.ensure_ready()  # no-op after the first successful call
         t0 = time.monotonic()
         response = requests.post(
