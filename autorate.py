@@ -213,7 +213,8 @@ def run_autorate(config):
             print(f"{progress} Skipping {modality}/{feature_name}: no activations at {acts_path}")
             continue
 
-        if not existing.empty and ((existing["inputs"] == modality) & (existing["feature_name"] == feature_name) & (existing["top_k"] == interp_row.get("top_k")) & (existing["matryoshka"] == interp_row.get("matryoshka"))).any():
+        existing_match = existing[(existing["inputs"] == modality) & (existing["feature_name"] == feature_name) & (existing["top_k"] == interp_row.get("top_k")) & (existing["matryoshka"] == interp_row.get("matryoshka"))] if not existing.empty else existing
+        if not existing_match.empty and existing_match["mayo_interpretation_discrimination_accuracy"].notna().any():
             print(f"{progress} Skipping {modality}/{feature_name}: already rated")
             continue
 

@@ -240,6 +240,99 @@ def test_autorate_uses_ollama_backend(tmp_path):
     assert len(result) == 1
 
 
+def test_autorate_retries_previously_nan_concept_and_logs_raw_response(tmp_path):
+    sample_ids = [f"S{i:03d}" for i in range(1, 9)]
+    metadata, meta_path = _make_metadata_n(tmp_path, sample_ids)
+    interp_path = _make_interpretations(tmp_path)
+    out_dir = tmp_path / "out"
+    out_dir.mkdir()
+    _make_activations(out_dir, sample_ids, "Concept_0", n_concepts=8, n_active=4)
+
+    # Simulate a previous run whose parse failed (e.g. truncated LLM output): a NaN accuracy
+    # row already exists for this exact concept.
+    pd.DataFrame([{
+        "inputs": "findings",
+        "feature_name": "Concept_0",
+        "top_k": 40,
+        "matryoshka": "[128, 512, 2048, 8192]",
+        "extracted_interpretation": "Calcified atherosclerotic plaques.",
+        "mayo_n_tested": 2,
+        "mayo_interpretation_discrimination_accuracy": float("nan"),
+        "mayo_raw_response": "garbled, unparseable output",
+    }]).to_csv(out_dir / "autointerp_results.csv", index=False)
+
+    cfg = OmegaConf.create({
+        "llm": "ollama",
+        "ollama_model": "gemma4:31b",
+        "ollama_auto_start": False,
+        "paths": {
+            "metadata_csv": str(meta_path),
+            "out_dir": str(out_dir),
+            "labs_csv": None,
+        },
+    })
+
+    fake_response = "* PREDICTIONS:\n1. 1\n2. 0"
+    with patch("autorate.INTERP_CSV", str(interp_path)), \
+         patch("autorate.N_TEST", 1), \
+         patch("autorate.ACTIVATION_QUANTILE", 0.0), \
+         patch("utilities.ollama_client.requests.post") as mock_post:
+        mock_post.return_value = MagicMock(json=lambda: {"response": fake_response})
+        mock_post.return_value.raise_for_status = lambda: None
+
+        from autorate import run_autorate
+        run_autorate(cfg)
+
+        mock_post.assert_called_once()  # retried instead of being skipped as "already rated"
+
+    result = pd.read_csv(out_dir / "autointerp_results.csv")
+    assert len(result) == 1  # stale NaN row replaced, not duplicated
+    assert not pd.isna(result.iloc[0]["mayo_interpretation_discrimination_accuracy"])
+    assert result.iloc[0]["mayo_raw_response"] == fake_response
+
+
+def test_autorate_skips_concept_with_existing_non_nan_accuracy(tmp_path):
+    sample_ids = [f"S{i:03d}" for i in range(1, 9)]
+    metadata, meta_path = _make_metadata_n(tmp_path, sample_ids)
+    interp_path = _make_interpretations(tmp_path)
+    out_dir = tmp_path / "out"
+    out_dir.mkdir()
+    _make_activations(out_dir, sample_ids, "Concept_0", n_concepts=8, n_active=4)
+
+    pd.DataFrame([{
+        "inputs": "findings",
+        "feature_name": "Concept_0",
+        "top_k": 40,
+        "matryoshka": "[128, 512, 2048, 8192]",
+        "extracted_interpretation": "Calcified atherosclerotic plaques.",
+        "mayo_n_tested": 2,
+        "mayo_interpretation_discrimination_accuracy": 0.85,
+        "mayo_raw_response": "* PREDICTIONS:\n1. 1\n2. 0",
+    }]).to_csv(out_dir / "autointerp_results.csv", index=False)
+
+    cfg = OmegaConf.create({
+        "llm": "ollama",
+        "ollama_model": "gemma4:31b",
+        "ollama_auto_start": False,
+        "paths": {
+            "metadata_csv": str(meta_path),
+            "out_dir": str(out_dir),
+            "labs_csv": None,
+        },
+    })
+
+    with patch("autorate.INTERP_CSV", str(interp_path)), \
+         patch("utilities.ollama_client.requests.post") as mock_post:
+        from autorate import run_autorate
+        run_autorate(cfg)
+
+        mock_post.assert_not_called()  # already successfully rated, should not re-query
+
+    result = pd.read_csv(out_dir / "autointerp_results.csv")
+    assert len(result) == 1
+    assert result.iloc[0]["mayo_interpretation_discrimination_accuracy"] == 0.85
+
+
 def test_autorate_end_to_end(tmp_path):
     sample_ids = [f"S{i:03d}" for i in range(1, 11)]
     metadata, meta_path = _make_metadata_n(tmp_path, sample_ids)

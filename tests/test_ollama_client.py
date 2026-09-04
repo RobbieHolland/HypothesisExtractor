@@ -100,6 +100,20 @@ def test_auto_start_false_skips_bootstrap_entirely():
         mock_popen.assert_not_called()
 
 
+def test_query_default_max_tokens_is_16384():
+    from utilities.ollama_client import OllamaClient
+
+    client = OllamaClient(model="gemma4:31b")
+    with patch("utilities.ollama_client.requests.get") as mock_get, \
+         patch("utilities.ollama_client.requests.post") as mock_post:
+        mock_get.return_value = _mock_ok_response({"models": [{"name": "gemma4:31b"}]})
+        mock_post.return_value = _mock_ok_response({"response": "hello"})
+
+        client.query("hi")
+
+        assert mock_post.call_args.kwargs["json"]["options"]["num_predict"] == 16384
+
+
 def test_bootstrap_only_runs_once():
     from utilities.ollama_client import OllamaClient
 

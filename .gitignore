@@ -1,4 +1,5 @@
 out/
+.claude/
 data/mock/ct/
 __pycache__/
 *.pyc
